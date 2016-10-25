@@ -1,9 +1,3 @@
-html, body {
+body {
     margin: 0;
-}
-
-.header {
-    color: #337000;
-    display: inline;
-    text-align: center;
 }

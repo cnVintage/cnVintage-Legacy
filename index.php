@@ -1,26 +1,26 @@
 <?php 
     include_once '/charset.php';
+    include '/components/tags.php';
 ?>
 <html>
     <head>
         <title>cnVintage</title>
         <link rel="stylesheet" href="style/main.css">
     </head>
-    <body>
+    <body bgcolor="#ffffff" >
         <?php include '/components/header.php'; ?>
         <!-- Page body -->
-        <center>
-            <table width="600px">
-            <tr>
-                <td width="20%" style="text-align: center"><?php localprint('所有话题') ?></td>
-                <td width="80%" style="text-align: center"><?php localprint('所有帖子') ?></td>
-            </tr>
-            <tr>
-                <td align="left" valign="top"><?php include '/components/tags.php'; ?></td>
-                <td align="left" valign="top"><?php include '/components/topics.php'; ?></td>
-            </tr>
-            </table>
-        <center>
+        <br>
+        <table width="100%" bgcolor="#ffffff" border="0" cellspacing="0" cellpadding="0"><tbody><tr>
+            <td width="20">&nbsp;</td>      <!-- margin left : 20 -->
+            <td width="150" valign="top">   <!-- tags list -->
+                <?php require_tags(); ?>
+            </td>
+            <td width="20">&nbsp;</td>      <!-- margin-left|right: 10 -->
+            <td valign="top">               <!-- topics list|content -->
+                CONTENT
+            </td>
+            <td width="20">&nbsp;</td>      <!-- margin right : 20 -->
+		</tr></tbody></table>
     </body>
-
 </html>

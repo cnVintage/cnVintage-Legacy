@@ -1,4 +1,4 @@
 <?php 
     include_once '/charset.php';
 ?>
-<!-- Topics -->
+<!-- Top links and search -->
