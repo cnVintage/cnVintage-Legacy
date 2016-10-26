@@ -1,6 +1,7 @@
 <?php 
     include_once '/charset.php';
     include '/components/tags.php';
+    include '/components/topics.php';
 ?>
 <html>
     <head>
@@ -18,7 +19,7 @@
             </td>
             <td width="20">&nbsp;</td>      <!-- margin-left|right: 10 -->
             <td valign="top">               <!-- topics list|content -->
-                CONTENT
+                <?php require_all_topic(); ?>
             </td>
             <td width="20">&nbsp;</td>      <!-- margin right : 20 -->
 		</tr></tbody></table>
