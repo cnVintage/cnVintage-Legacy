@@ -1,7 +1,9 @@
 'use strict';
 
 let express = require('express');
+let iconv = require('iconv-lite');
 let config = require('./config');
+let db = require('./db');
 
 let app = express();
 
@@ -11,32 +13,67 @@ app.set('view engine', 'pug');
 // set up the route to the static files.
 app.use('/static', express.static('./static'));
 
+// Make sure our content will be decode correctly.
+app.use((req, res, next) => {
+    res.set('Content-Type', 'text/html; charset=UTF-8');
+    next();
+})
+
+// Index page
 app.get('/', (req, res) => {
-  res.render('index', {
-    title: 'cnVintage - 首页',
-    tags: [
-      {color: '#AAAAAA', name: '所有话题'},
-      {color: '#003366', name: '机器展示'},
-      {color: '#FF9900', name: '改装自制'},
-      {color: '#009999', name: '新潮数码'},
-      {color: '#99CC33', name: '一般讨论'},
-    ],
-    topics: [
-      {
-        title: 'Hello World',
-        startUser: {
-          avatarPath: '',
-          name: 'SYSTEM',
-        },
-        lastUser: {
-          avatarPath: '',
-          name: 'SYSTEM',
-        },
-        lastDate: '1970-01-01',
-        replyCnt: 3,
-      }
-    ],
-  });
+    // Storage the data that will be passed to the render engine.
+    let data = {
+        lang: config.lang,
+        title: 'cnVintage - 首页',
+    };
+
+    // Fetch all the tags' information from database.
+    let conn = db.getConn();
+    conn.query({
+        sql: 'SELECT name, color, id FROM fl_tags'
+    }, (err, table) => {
+        data.tags = table.map(item => {
+            return {
+                name: item.name,
+                color: item.color,
+                id: item.id,
+            };
+        });
+
+        // Now is the content of index.
+        conn.query({
+            sql: [
+                'SELECT fl_discussions.id, fl_discussions.title,',
+                '       fl_discussions.comments_count, fl_discussions.last_time,',
+                '       fl_discussions.start_user_id, fl_discussions.last_user_id,',
+                '       user1.avatar_path, user1.username as start_user_name,',
+                '       user2.username as last_user_name',
+                'FROM  fl_discussions',
+                'INNER JOIN fl_users user1',
+                '   ON user1.id = start_user_id',
+                'INNER JOIN fl_users user2',
+                '   ON user2.id = last_user_id'
+            ].join(' '),
+        }, (err, table) => {
+            data.topics = table.map(item => {
+                return {
+                    title: item['title'],
+                    startUser: {
+                        avatarPath: 'static/' + item['avatar_path'],
+                        name: item['start_user_name'],
+                    },
+                    lastUser: {
+                        name: item['last_user_name'],
+                    },
+                    lastDate: item['last_time'].toLocaleDateString(),
+                    replyCnt: item['comments_count'],
+                };
+            });
+
+            // Render the page and send to client.
+            res.render('index', data);
+        });
+    })
 });
 
 app.listen(config.port);
