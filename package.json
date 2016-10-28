@@ -1,0 +1,25 @@
+{
+  "name": "cnvintage-legacy",
+  "version": "0.1.0",
+  "description": "Legacy version of cnVintage.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cnVintage/cnVintage-Legacy.git"
+  },
+  "author": "ntzyz <ntzyz@live.cn>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cnVintage/cnVintage-Legacy/issues"
+  },
+  "homepage": "https://github.com/cnVintage/cnVintage-Legacy#readme",
+  "dependencies": {
+    "express": "^4.14.0",
+    "marked": "^0.3.6",
+    "mysql": "^2.11.1",
+    "pug": "^2.0.0-beta6"
+  }
+}

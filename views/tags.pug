@@ -1,0 +1,8 @@
+table(width="100%", height="30", bgcolor="#337000", border="0", cellspacing="0", cellpadding="0"): tbody
+    td: div(align="center"): b: font(color="#FFFFFF") 新的话题
+br
+table(width="100%", border="0", cellspacing="0", cellpadding="0")
+    each tag in tags
+        tr
+            td(width="30", bgcolor=tag.color)
+            td(height="30")=tag.name
