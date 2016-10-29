@@ -1,8 +1,8 @@
 table(width="100%", height="30", bgcolor="#337000", border="0", cellspacing="0", cellpadding="0"): tbody
-    td: div(align="center"): b: font(color="#FFFFFF"): a(href="#NEW_TOPIC")=lang.newTopic
+    td: div(align="center"): b: a(href="#NEW_TOPIC"): font(color="#FFFFFF")=lang.newTopic
 br
 table(width="100%", border="0", cellspacing="0", cellpadding="0")
     each tag in tags
         tr
             td(width="30", bgcolor=tag.color)
-            td(height="30", align="center")=tag.name
+            td(height="30", align="center"): a(href=tag.href): font(color="#000000")=tag.name
