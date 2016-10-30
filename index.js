@@ -21,5 +21,8 @@ app.use((req, res, next) => {
 // Index page
 app.get('/', require('./handler-index'));
 
+// Discussions pages.
+app.get('/d/:id-:name', require('./handler-discussion'));
+
 app.listen(config.port);
 console.log(`[INFO] Server started on port ${config.port}.`);

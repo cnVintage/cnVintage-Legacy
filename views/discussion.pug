@@ -1,0 +1,36 @@
+html
+    head
+        title=title
+        link(rel="stylesheet", href="/static/main.css")
+    body(bgcolor="#ffffff")
+        include ./header.pug
+        br
+        table(width="100%", bgcolor="#ffffff", border="0", cellspacing="0", cellpadding="0"): tbody
+            td(width="20")
+            td(valign="top")
+                p(align="center"): b: font(size="5")=title
+                table(width="100%", border="0", cellspacing="0", cellpadding="0"): tbody
+                    - let index = 0
+                    each post in posts
+                        - let color = index++ % 2 == 0 ? "#FFFFFF": "#EEEEEE"
+                        tr(bgcolor=color)
+                            td(height="10px")
+                            td(height="10px")
+                            td(height="10px")
+                            td(height="10px")
+                            td(height="10px")
+                        tr(bgcolor=color)
+                            td(width="10px")
+                            td(width="50px", valign="top"): img(src=post.avatarPath)
+                            td(width="10px")
+                            td
+                                p: font(size="3")!=post.userName + '&nbsp;' + post.date
+                                !=post.content
+                            td(width="10px")
+                        tr(bgcolor=color)
+                            td(height="10px")
+                            td(height="10px")
+                            td(height="10px")
+                            td(height="10px")
+                            td(height="10px")
+            td(width="20")
