@@ -1,7 +1,7 @@
 cnVintage-Legacy
 ================
 
-Legacy version of cnVintage with support for IE3.0.
+Legacy version of cnVintage with support for IE ~~3.0~~ 4.0.
 
 ## Status
 
