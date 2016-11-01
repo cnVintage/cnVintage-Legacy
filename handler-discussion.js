@@ -28,8 +28,10 @@ let handler = (req, res) => {
             return {
                 userName: row.username,
                 date: row.time,
-                content: row.content.replace(/<s>([^]+?)<\/s>/g, () => {
+                content: row.content.replace(/<[s|e]>([^]+?)<\/[s|e]>/g, () => {
                     return '';
+                }).replace(/<IMG ([^]+?)>([^]+?)<\/IMG>/g, (match, p1, p2) => {
+                    return `<img ${p1}>`;
                 }),
                 avatarPath: '/static/' + row.avatar_path
             }
