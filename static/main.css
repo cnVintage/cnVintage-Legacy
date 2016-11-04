@@ -5,3 +5,7 @@ body {
 img {
     max-width: 100%;
 }
+
+a img {
+    border: 0;
+}

@@ -32,11 +32,8 @@ let handler = (req, res) => {
                 content: row.content.replace(/<[s|e]>([^]+?)<\/[s|e]>/g, () => {
                     return '';
                 }).replace(/<IMG ([^]+?)>([^]+?)<\/IMG>/g, (match, p1, p2) => {
-                    if (p1.indexOf('https://www.cnvintage.org/assets/images/') == 0) {
-                        // Image from our site, we should convert it for IE4 (jpeg only, not too big)
-                        return `<img ${p1.substr()}>`;
-                    }
-                    return `<img ${p1}>`;
+                    let url = encodeURIComponent(p1.match(/src="([^]+?)"/)[1]);
+                    return `<img src="/imgProxy?url=${ url }">`;
                 }).replace(/<URL url="([^]+?)">([^]+?)<\/URL>/g, (match, p1, p2) => {
                     return `<a href="${p1}">${p2}</a>`
                 }),

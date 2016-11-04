@@ -22,6 +22,9 @@ app.use((req, res, next) => {
 // Index page
 app.get('/', require('./handler-index'));
 
+// Image proxy: Convert any image to JPEG with width = 640
+app.get('/imgProxy', require('./handler-image-proxy'));
+
 // Discussions pages.
 app.get('/d/:id-:name', require('./handler-discussion'));
 
