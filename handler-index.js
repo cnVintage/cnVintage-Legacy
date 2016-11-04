@@ -44,7 +44,7 @@ let handler = (req, res) => {
                     title: item['title'],
                     id: item['id'],
                     startUser: {
-                        avatarPath: '/assets/avatars/' + row.avatar_path,
+                        avatarPath: '/assets/avatars/' + item['avatar_path'],
                         name: item['start_user_name'],
                     },
                     lastUser: {
