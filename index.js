@@ -11,6 +11,7 @@ app.set('view engine', 'pug');
 
 // set up the route to the static files.
 app.use('/static', express.static('./static'));
+app.use('/assets', express.static(config.assetsPath));
 
 // Make sure our content will be decode correctly.
 app.use((req, res, next) => {

@@ -2,6 +2,7 @@
 
 let config = {
     port: 8080,
+    assetsPath: 'C:\\wamp64\\www\\cnvintage\\assets',
     mysql: {
         host: '127.0.0.1',
         user: 'root',

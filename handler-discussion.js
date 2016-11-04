@@ -2,6 +2,7 @@
 
 let db = require('./db');
 let config = require('./config');
+let gm = require('gm');
 
 let handler = (req, res) => {
     let conn = db.getConn();
@@ -31,9 +32,15 @@ let handler = (req, res) => {
                 content: row.content.replace(/<[s|e]>([^]+?)<\/[s|e]>/g, () => {
                     return '';
                 }).replace(/<IMG ([^]+?)>([^]+?)<\/IMG>/g, (match, p1, p2) => {
+                    if (p1.indexOf('https://www.cnvintage.org/assets/images/') == 0) {
+                        // Image from our site, we should convert it for IE4 (jpeg only, not too big)
+                        return `<img ${p1.substr()}>`;
+                    }
                     return `<img ${p1}>`;
+                }).replace(/<URL url="([^]+?)">([^]+?)<\/URL>/g, (match, p1, p2) => {
+                    return `<a href="${p1}">${p2}</a>`
                 }),
-                avatarPath: '/static/' + row.avatar_path
+                avatarPath: '/assets/avatars/' + row.avatar_path
             }
         });
         data.title = table[0].title;
