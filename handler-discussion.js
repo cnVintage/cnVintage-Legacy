@@ -36,6 +36,8 @@ let handler = (req, res) => {
                     return `<img src="/imgProxy?url=${ url }">`;
                 }).replace(/<URL url="([^]+?)">([^]+?)<\/URL>/g, (match, p1, p2) => {
                     return `<a href="${p1}">${p2}</a>`
+                }).replace(/<CODE>([^]+?)<\/CODE>/, (match, p1) => {
+                    return `<pre><code>${p1}</code></pre>`
                 }),
                 avatarPath: '/assets/avatars/' + row.avatar_path
             }
