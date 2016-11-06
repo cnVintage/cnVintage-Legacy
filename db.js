@@ -13,7 +13,7 @@ let disconnectHandler = function() {
             throw err;
         }
         conn.destroy();
-        conn = mysql.createConnection(require('./config').MySQL);
+        conn = mysql.createConnection(require('./config').mysql);
         disconnectHandler();
     });
 }

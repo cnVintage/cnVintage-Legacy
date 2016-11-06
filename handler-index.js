@@ -51,7 +51,7 @@ let handler = (req, res) => {
                         name: item['last_user_name'],
                     },
                     lastDate: item['last_time'].toLocaleDateString(),
-                    replyCnt: item['comments_count'],
+                    replyCnt: item['comments_count'] - 1,
                     href: `/d/${item['id']}-${item['slug']}`,
                 };
             });
