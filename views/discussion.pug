@@ -15,21 +15,23 @@ html
                         - let color = index++ % 2 == 0 ? "#FFFFFF": "#EEEEEE"
                         tr(bgcolor=color)
                             td(height="10px")
-                            td(height="10px")
+                            td(height="10px", width="50px")
                             td(height="10px")
                             td(height="10px")
                             td(height="10px")
                         tr(bgcolor=color)
                             td(width="10px")
-                            td(valign="top"): img(width="50px", src=post.avatarPath)
+                            td(valign="top", width="50px"): img(width="50px", src=post.avatarPath)
                             td(width="10px")
                             td
-                                p: font(size="3")!=post.userName + '&nbsp;' + post.date
+                                p
+                                    font(size="3")!=post.userName + '&nbsp;'
+                                    font(size="3", color="#337000")!=post.date
                                 !=post.content
                             td(width="10px")
                         tr(bgcolor=color)
                             td(height="10px")
-                            td(height="10px")
+                            td(height="10px", width="50px")
                             td(height="10px")
                             td(height="10px")
                             td(height="10px")
