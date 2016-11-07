@@ -1,7 +1,7 @@
 html
     head
         title=title
-        link(rel="stylesheet", href="static/main.css")
+        link(rel="stylesheet", href="/static/main.css")
     body(bgcolor="#ffffff")
         include ./header.pug
         br
@@ -9,5 +9,5 @@ html
             td(width="20")
             td(width="150" valign="top"): include ./tags.pug
             td(width="20")
-            td(valign="top"): include ./discussions.pug
+            td(valign="top"): include ./discussion-list.pug
             td(width="20")

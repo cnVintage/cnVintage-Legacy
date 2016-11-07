@@ -38,7 +38,7 @@ let handler = (req, res) => {
                 '   ON user1.id = start_user_id',
                 'INNER JOIN fl_users user2',
                 '   ON user2.id = last_user_id',
-                'ORDER BY fl_discussions.start_time'
+                'ORDER BY fl_discussions.last_time DESC'
             ].join(' '),
         }, (err, table) => {
             data.topics = table.map(item => {
@@ -46,7 +46,7 @@ let handler = (req, res) => {
                     title: item['title'],
                     id: item['id'],
                     startUser: {
-                        avatarPath: '/assets/avatars/' + item['avatar_path'],
+                        avatarPath: '/assets/avatars/' + (item['avatar_path'] || 'default.jpg'),
                         name: item['start_user_name'],
                     },
                     lastUser: {

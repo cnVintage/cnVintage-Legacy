@@ -39,7 +39,7 @@ let handler = (req, res) => {
                 }).replace(/<CODE>([^]+?)<\/CODE>/, (match, p1) => {
                     return `<pre><code>${p1}</code></pre>`
                 }),
-                avatarPath: '/assets/avatars/' + row.avatar_path
+                avatarPath: '/assets/avatars/' + (row.avatar_path || 'default.jpg')
             }
         });
         data.title = table[0].title;

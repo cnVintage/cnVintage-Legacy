@@ -24,7 +24,7 @@ let handler = (req, res) => {
             // Get the buffer of image.
             request.get({
                 url: url,
-                encoding: null,     // Make sure body is buffer instead of string.
+                encoding: null,     // Make sure body is buffer but not string.
             }, (err, response, body) => {
                 if (err) {
                     res.set('Content-Type', 'text/plain');
@@ -48,6 +48,7 @@ let handler = (req, res) => {
             });
         }
         else {
+            // Catch HIT! Just send it back.
             res.send(content);
         }
     })
