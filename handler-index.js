@@ -61,7 +61,7 @@ let handler = (req, res) => {
 
             // Deal with those posts that is sticky
             let sticky = [];
-            for (let i = 0; i != data.topics.length; ++i) {
+            for (let i = 0; i < data.topics.length; ++i) {
                 if (data.topics[i].isSticky) {
                     sticky.push(data.topics[i]);
                     data.topics.splice(i, 1);
