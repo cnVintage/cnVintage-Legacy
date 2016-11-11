@@ -38,6 +38,8 @@ let handler = (req, res) => {
                     return `<a href="${p1}">${p2}</a>`
                 }).replace(/<CODE>([^]+?)<\/CODE>/, (match, p1) => {
                     return `<pre><code>${p1}</code></pre>`
+                }).replace(/<C>\$\$([^]+?)\$\$<\/C>/g, (match, expr) => {
+                    return `<img src="/KaTeX/${encodeURIComponent(expr)}"></img>`
                 }),
                 avatarPath: '/assets/avatars/' + (row.avatar_path || 'default.jpg')
             }

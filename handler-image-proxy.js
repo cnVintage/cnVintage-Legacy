@@ -19,7 +19,7 @@ let handler = (req, res) => {
     res.set('Content-Type', 'image/jpeg');
     
     // Check cached file.
-    fs.readFile(`${config.imgCache}/${fileName}.cached`, (err, content) => {
+    fs.readFile(`${config.cache}/${fileName}.cached`, (err, content) => {
         if (err) {  // Not found.
             // Get the buffer of image.
             request.get({
@@ -43,7 +43,7 @@ let handler = (req, res) => {
                             return;
                         }
                         res.send(buffer);
-                        fs.writeFile(`${config.imgCache}/${fileName}.cached`, buffer);
+                        fs.writeFile(`${config.cache}/${fileName}.cached`, buffer, () => {});
                     });
             });
         }

@@ -31,5 +31,8 @@ app.get('/d/:id-:name', require('./handler-discussion'));
 // Tags view.
 app.get('/t/:slug', require('./handler-tags'));
 
+// LaTeX to JPEG
+app.get('/KaTeX/:expr', require('./handler-katex'));
+
 app.listen(config.port);
 console.log(`[INFO] Server started on port ${config.port}.`);

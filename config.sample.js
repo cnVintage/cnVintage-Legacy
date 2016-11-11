@@ -3,7 +3,7 @@
 let config = {
     port: 8080,
     assetsPath: 'C:\\wamp64\\www\\cnvintage\\assets',
-    imgCache: 'C:\\Users\\ntzyz\\AppData\\Local\\Temp\\cnVintage',
+    cache: 'C:\\Users\\ntzyz\\AppData\\Local\\Temp\\cnVintage',
     mysql: {
         host: '127.0.0.1',
         user: 'root',
