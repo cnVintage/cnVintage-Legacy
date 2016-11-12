@@ -34,20 +34,26 @@ let handler = (req, res) => {
     fs.readFile(`${config.cache}/${hash}.trim.jpg`, (err, content) => {
         if (err) {
             // Not found. Convert LaTeX expression to HTML code.
-            let html = [
-                '<html>',
-                    '<head>',
-                        '<meta charset="UTF-8"/>',
-                        '<link href="http://cdn.bootcss.com/KaTeX/0.5.1/katex.min.css" rel="stylesheet">',
-                        '<style>',
-                            'html, body { display: inline-block; witdh: 400px;}',
-                        '</style>',
-                    '</head>',
-                    '<body>',
-                        katex.renderToString(expr),
-                    '</body>',
-                '</html>'
-            ].join('');
+            let html;
+            try {
+                html = [
+                    '<!DOCTYPE html>',
+                    '<html>',
+                        '<head>',
+                            '<meta charset="UTF-8"/>',
+                            '<link href="http://cdn.bootcss.com/KaTeX/0.5.1/katex.min.css" rel="stylesheet">',
+                        '</head>',
+                        '<body>',
+                            katex.renderToString(expr),
+                        '</body>',
+                    '</html>'
+                ].join('');
+            }
+            catch (ex) {
+                res.set('Content-Type', 'text/plain');
+                res.send('500: ' + ex);
+                return;
+            }
 
             // Write to ${hash}.html
             fs.writeFile(`${config.cache}/${hash}.html`, html, (err) => {
