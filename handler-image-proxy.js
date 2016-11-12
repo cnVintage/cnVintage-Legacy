@@ -1,3 +1,8 @@
+/**
+ * IE 4.0 does not support PNG files and those very large JPEG files.
+ * Here we use graphicsmagick to convert any image file to JPEG with fixed width(640px).
+ */
+
 'use strict';
 
 let db = require('./db');

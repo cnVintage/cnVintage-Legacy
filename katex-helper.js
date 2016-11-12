@@ -4,14 +4,12 @@ let {exec} = require('child_process');
 
 class TaskQueue {
     constructor() {
-        this.queue = [];
-        this.busy = false;
-        this.cnt = 0;
+        this.queue = [];        // The actual queue of task.
+        this.busy = false;      // Indicate that if there's task running.
     }
 
     beginTasks() {
         this.busy = true;
-        console.log(`[beginTasks] Queue length = ${this.queue.length}, Cnt = ${this.cnt}`);
         let front = this.queue.shift();
         exec(front.command, (err, stdout, stderr) => {
             setTimeout(() => {

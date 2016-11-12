@@ -2,7 +2,6 @@
 
 let db = require('./db');
 let config = require('./config');
-let gm = require('gm');
 
 let handler = (req, res) => {
     let conn = db.getConn();
@@ -11,6 +10,7 @@ let handler = (req, res) => {
         title: 'cnVintage - 首页',
     };
 
+    // Get all the posts under the discussion by discussion id.
     conn.query({
         sql: [
             'SELECT fl_posts.type, fl_posts.content, fl_posts.time, fl_posts.user_id,',
@@ -25,6 +25,7 @@ let handler = (req, res) => {
         ].join(' '),
         values: [req.params.id]
     }, (err, table) => {
+        // Reconstruct the structure of post list.
         data.posts = table.map(row => {
             return {
                 userName: row.username,
@@ -46,7 +47,11 @@ let handler = (req, res) => {
                 avatarPath: '/assets/avatars/' + (row.avatar_path || 'default.jpg')
             }
         });
+
+        // Update discussion title.
         data.title = table[0].title;
+
+        // Render the page and send to client.
         res.render('discussion', data);
     })
 };

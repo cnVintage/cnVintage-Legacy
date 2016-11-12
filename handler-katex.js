@@ -1,14 +1,14 @@
 /**
- *  wkhtmltox binary is required. You can download it from:
- *    http://wkhtmltopdf.org/downloads.html
- *  Also, you need to install xvfb to fix the bug of wkhtmltopdf by:
- *    sudo apt install xvfb
- *  
- *  Test case:
- *      x%20%3D%20%7B-b%20%5Cpm%20%5Csqrt%7Bb%5E2-4ac%7D%20%5Cover%202a%7D.
+ * Render LaTeX to JPEG using KaTeX and wkhtmltox.
  * 
- *  Bug:
- *      
+ * Notes:
+ *  wkhtmltox binary is required. You can download it from:
+ *      http://wkhtmltopdf.org/downloads.html
+ *  Also, you need to install xvfb to fix the bug of wkhtmltopdf by:
+ *      sudo apt install xvfb
+ * 
+ * Test case:
+ *  x%20%3D%20%7B-b%20%5Cpm%20%5Csqrt%7Bb%5E2-4ac%7D%20%5Cover%202a%7D.
  */
 
 'use strict';

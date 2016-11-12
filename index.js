@@ -22,7 +22,7 @@ app.use((req, res, next) => {
 // Index page
 app.get('/', require('./handler-index'));
 
-// Image proxy: Convert any image to JPEG with width = 640
+// Image proxy
 app.get('/imgProxy', require('./handler-image-proxy'));
 
 // Discussion detail page.
