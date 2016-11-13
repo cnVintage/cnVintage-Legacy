@@ -1,7 +1,6 @@
 'use strict';
 
 let express = require('express');
-let iconv = require('iconv-lite');
 let config = require('./config');
 
 let app = express();
