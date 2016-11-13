@@ -13,3 +13,7 @@ a img {
 a {
     word-wrap: break-word;
 }
+
+form {
+    margin: 0;
+}

@@ -1,12 +1,12 @@
-table(width="100%", border="0", cellspacing="0", cellpadding="0", bgcolor="#337000", height="54px", valign="bottom"): tr
-    td(height="40" width="20")
-    td(height="40" width="220"): div(align="left")
+form(method="get"): table(width="100%", border="0", cellspacing="0", cellpadding="0", bgcolor="#337000", height="54px", valign="bottom"): tr
+    td(height="40", width="20")
+    td(height="40", width="220"): div(align="left")
         a(href="/"): img(src="/static/cnvtg.jpg")
         font(color="#ffffff")=lang.legacy
     td(height="40"): div(align="right")
-        input(type="text" name="search" value="Search")
+        input(type="text", name="q", value="Search")
         | &nbsp;
-        input(type="submit" name="submit" value="搜索")
+        input(type="submit", name="submit", value="搜索")
         | &nbsp;
         a(href="/login"): font(color="#FFFFFF")=lang.signin
         | &nbsp;

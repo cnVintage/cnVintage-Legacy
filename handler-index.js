@@ -4,6 +4,12 @@ let db = require('./db');
 let config = require('./config');
 
 let handler = (req, res) => {
+    // Check if the user is searching.
+    if (req.query.q) {
+        require('./handler-search')(req, res);
+        return;
+    }
+
     // Storage the data that will be passed to the render engine.
     let data = {
         lang: config.lang,
