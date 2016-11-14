@@ -7,7 +7,7 @@ Legacy version of cnVintage with support for IE ~~3.0~~ 4.0.
 
 Working in progress.
 
-## TODO:
+## Todo
 - [X] LaTeX to JPG.
 - [X] PNG to JPG.
 - [ ] User page.
