@@ -54,7 +54,7 @@ let handler = (req, res) => {
             });
         }
         else {
-            // Catch HIT! Just send it back.
+            // Cache HIT! Just send it back.
             res.send(content);
         }
     })

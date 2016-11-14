@@ -12,7 +12,7 @@ app.set('view engine', 'pug');
 app.use('/static', express.static('./static'));
 app.use('/assets', express.static(config.assetsPath));
 
-// Make sure our content will be decode correctly.
+// Make sure our content would be decoded correctly.
 app.use((req, res, next) => {
     res.set('Content-Type', 'text/html; charset=UTF-8');
     next();

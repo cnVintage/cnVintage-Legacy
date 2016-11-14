@@ -75,7 +75,7 @@ let handler = (req, res) => {
                     };
                 }); 
 
-                // Deal with those posts that is sticky
+                // Deal with sticky posts
                 let sticky = [];
                 for (let i = 0; i < data.topics.length; ++i) {
                     if (data.topics[i].isSticky) {
