@@ -10,6 +10,7 @@ let config = require('./config');
 let gm = require('gm');
 let request = require('request');
 let fs = require('fs');
+let sizeOf = require('image-size');
 
 let handler = (req, res) => {
     // Fetch the url of image that we need to convert.
@@ -36,10 +37,10 @@ let handler = (req, res) => {
                     res.send('500: ' + err);
                     return;
                 }
-
+                var dimension = sizeOf(body); // Get the image size.
                 gm(body, fileName)
                     .background("#ffffff")
-                    .resize(640, null)
+                    .resize(((dimension.width>640)?(640):(dimension.width)), null)
                     .setFormat('jpg')
                     .toBuffer((err, buffer) => {
                         if (err) {
