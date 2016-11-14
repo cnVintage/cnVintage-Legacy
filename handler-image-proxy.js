@@ -17,6 +17,7 @@ let handler = (req, res) => {
     let url = req.query.url;
     let fileName = url.substr(url.lastIndexOf('/') + 1);
     if (!url) {
+        res.status(400);
         res.send('400: Invalid access.');
         return;
     }
@@ -34,6 +35,7 @@ let handler = (req, res) => {
             }, (err, response, body) => {
                 if (err) {
                     res.set('Content-Type', 'text/plain');
+                    res.status(500);
                     res.send('500: ' + err);
                     return;
                 }
@@ -45,6 +47,7 @@ let handler = (req, res) => {
                     .toBuffer((err, buffer) => {
                         if (err) {
                             res.set('Content-Type', 'text/plain');
+                            res.status(500);
                             res.send('500: ' + err);
                             return;
                         }

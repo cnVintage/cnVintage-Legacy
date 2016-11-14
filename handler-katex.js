@@ -51,6 +51,7 @@ let handler = (req, res) => {
             }
             catch (ex) {
                 res.set('Content-Type', 'text/plain');
+                res.status(500);
                 res.send('500: ' + ex);
                 return;
             }
@@ -80,6 +81,7 @@ let handler = (req, res) => {
                                     .toBuffer((err, buffer) => {
                                         if (err) {
                                             res.set('Content-Type', 'text/plain');
+                                            res.status(500);
                                             res.send('500: ' + err);
                                             return;
                                         }
