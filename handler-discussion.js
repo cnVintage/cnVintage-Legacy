@@ -29,7 +29,8 @@ let handler = (req, res) => {
         data.posts = table.map(row => {
             return {
                 userName: row.username,
-                date: row.time.toLocaleDateString() + ' ' + row.time.toLocaleTimeString(),
+                date: row.time.toLocaleDateString('zh-CN', {timeZone: 'Asia/Shanghai', hour12: false}) + ' ' 
+                    + row.time.toLocaleTimeString('zh-CN', {timeZone: 'Asia/Shanghai', hour12: false}),
                 content: row.content.replace(/<[s|e]>([^]+?)<\/[s|e]>/g, () => {
                     return '';
                 }).replace(/<IMG ([^]+?)>([^]+?)<\/IMG>/g, (match, p1, p2) => {

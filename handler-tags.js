@@ -68,7 +68,7 @@ let handler = (req, res) => {
                         lastUser: {
                             name: item['last_user_name'],
                         },
-                        lastDate: item['last_time'].toLocaleDateString(),
+                        lastDate: item['last_time'].toLocaleDateString('zh-CN', {timeZone: 'Asia/Shanghai', hour12: false}),
                         replyCnt: item['comments_count'] - 1,
                         href: `/d/${item['id']}-${item['slug']}`,
                         isSticky: item['is_sticky']

@@ -17,3 +17,15 @@ a {
 form {
     margin: 0;
 }
+
+h1 {
+    font-size: 160%;
+}
+
+h2 {
+    font-size: 120%;
+}
+
+h3 {
+    font-size: 100%;
+}
