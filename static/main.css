@@ -29,3 +29,12 @@ h2 {
 h3 {
     font-size: 100%;
 }
+
+.preview {
+    padding: 10px;
+    background: #e4f2d9;
+}
+
+.mark {
+    background: #ffff00;
+}

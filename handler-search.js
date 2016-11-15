@@ -10,6 +10,7 @@ let handler = (req, res) => {
     let data = {
         lang: config.lang,
         title: 'cnVintage - 首页',
+        keyWord: req.query.q
     };
 
     // Fetch all the tags' information from database.
@@ -38,16 +39,17 @@ let handler = (req, res) => {
                 return {
                     id: item.id,
                     discussion_id: item.discussion_id,
+                    preview: 'This is a preview.',
                 }
             });
 
-            let searchResultById = [];
+            let searchResultById = {};
             searchResult.forEach(item => {
-                if (searchResultById.indexOf(item.discussion_id) >= 0) {
-                    return;
+                if (searchResultById[item.discussion_id]) {
+                    searchResultById[item.discussion_id] += '...' + item.preview + '...';
                 }
                 else {
-                    searchResultById.push(item.discussion_id);
+                    searchResultById[item.discussion_id] = '...' + item.preview;
                 }
             })
 
@@ -70,7 +72,7 @@ let handler = (req, res) => {
                 ].join(' '),
             }, (err, table) => {
                 let filter = item => {
-                    return Math.max(item['title'].toLowerCase().indexOf(partten), searchResultById.indexOf(item['id'])) >= 0;
+                    return item['title'].toLowerCase().indexOf(partten) >= 0 || searchResultById[item.id];
                 }
 
                 let filtered = table.filter(filter);
@@ -89,7 +91,8 @@ let handler = (req, res) => {
                         lastDate: item['last_time'].toLocaleDateString('zh-CN', {timeZone: 'Asia/Shanghai', hour12: false}),
                         replyCnt: item['comments_count'] - 1,
                         href: `/d/${item['id']}-${item['slug']}`,
-                        isSticky: item['is_sticky']
+                        isSticky: item['is_sticky'],
+                        preview: searchResultById[item['id']] || ''
                     };
                 });
 
@@ -105,7 +108,7 @@ let handler = (req, res) => {
                 data.topics = sticky.concat(data.topics);
 
                 // Render the page and send to client.
-                res.render('index', data);
+                res.render('search-result', data);
             });
         });
     })

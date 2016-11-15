@@ -1,0 +1,38 @@
+html
+    head
+        title=title
+        link(rel="stylesheet", href="/static/main.css")
+    body(bgcolor="#ffffff")
+        include ./header.pug
+        br
+        table(width="100%", bgcolor="#ffffff", border="0", cellspacing="0", cellpadding="0")
+            td(width="20")
+            td(width="150" valign="top"): include ./tags.pug
+            td(width="20")
+            td(valign="top")
+                table(width="100%", border="0", cellspacing="0", cellpadding="0"): tbody
+                    each topic in topics
+                        tr
+                            td(width="50", height="50"): img(width="50", height="50", src=topic.startUser.avatarPath)
+                            td(width="10")
+                            td
+                                font(size="4"): a(href=topic.href): font(color="#000000")=topic.title
+                                br
+                                font(color="#89a970")=`${topic.lastUser.name}${lang.lastReply}${topic.lastDate}`
+                            td(width="20", align="center")
+                                img(src="/static/reply.jpg")
+                                br
+                                span=topic.replyCnt
+                        tr: td(height="10")
+                        tr
+                            td(width="50")
+                            td(width="10")
+                            td.preview
+                                div!=topic.preview
+                            td(width="20", align="center")
+                        tr: td(height="10")
+            td(width="20")
+        include ./footer.pug
+
+
+
