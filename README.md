@@ -10,8 +10,8 @@ Working in progress.
 ## Todo
 - [X] LaTeX to JPG.
 - [X] PNG to JPG.
+- [X] Search.
 - [ ] User page.
-- [ ] Search.
 - [ ] Login and reply.
 
 ## Licenses
