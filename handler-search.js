@@ -35,7 +35,7 @@ let handler = (req, res) => {
                 return (item.content.toLowerCase().indexOf(partten) >= 0);
             }
 
-            // Remote all the HTML markup.
+            // Remove all the HTML markup.
             table = table.map(item => {
                 item.content = item.content.replace(/<.+?>/g, (match) => {
                     return '';
