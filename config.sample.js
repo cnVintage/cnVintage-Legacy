@@ -18,6 +18,10 @@ let config = {
         search: '搜索',
         signin: '登陆',
         signup: '注册',
+        index: '首页',
+        searchResult: '搜索结果',
+        siteTitle: 'cnVintage',
+        tag: '标签'
     }
 }
 

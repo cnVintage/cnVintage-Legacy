@@ -9,7 +9,7 @@ let handler = (req, res) => {
     // Storage the data that will be passed to the render engine.
     let data = {
         lang: config.lang,
-        title: 'cnVintage - 首页',
+        title: `${config.lang.searchResult}: ${req.query.q} - ${config.lang.siteTitle}`,
         keyWord: req.query.q
     };
 

@@ -7,7 +7,6 @@ let handler = (req, res) => {
     // Storage the data that will be passed to the render engine.
     let data = {
         lang: config.lang,
-        title: 'cnVintage - 首页',
     };
 
     // Fetch all the tags' information from database.
@@ -34,7 +33,7 @@ let handler = (req, res) => {
             values: [req.params.slug],
         }, (err, table) => {
             let tagId = table[0].id;
-            data.title = `标签：${table[0].name} - cnVintage`;
+            data.title = `${config.lang.tag}: ${table[0].name} - ${config.lang.siteTitle}`;
 
             // Now is the content under the tag.
             conn.query({

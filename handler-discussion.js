@@ -7,7 +7,6 @@ let handler = (req, res) => {
     let conn = db.getConn();
     let data = {
         lang: config.lang,
-        title: 'cnVintage - 首页',
     };
 
     // Get all the posts under the discussion by discussion id.
