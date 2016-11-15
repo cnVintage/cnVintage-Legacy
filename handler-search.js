@@ -35,21 +35,34 @@ let handler = (req, res) => {
                 return (item.content.toLowerCase().indexOf(partten) >= 0);
             }
 
+            // Remote all the HTML markup.
+            table = table.map(item => {
+                item.content = item.content.replace(/<.+?>/g, (match) => {
+                    return '';
+                });
+                return item;
+            });
+
+            // Use the filter defined above to test all elements in the array.
             let searchResult = table.filter(filter).map(item => {
+                let begin = Math.max(item.content.toLowerCase().indexOf(partten) - 48, 0);
                 return {
                     id: item.id,
                     discussion_id: item.discussion_id,
-                    preview: 'This is a preview.',
+                    preview: item.content.substr(begin, 96).replace(new RegExp(partten, 'ig'), (match) => {
+                        return `<span class="mark">${match}</span>`;
+                    }),
                 }
             });
 
+            // A map of search result. `discussion id` -> `preview`
             let searchResultById = {};
             searchResult.forEach(item => {
                 if (searchResultById[item.discussion_id]) {
-                    searchResultById[item.discussion_id] += '...' + item.preview + '...';
+                    searchResultById[item.discussion_id] += '<br />' + item.preview + '<br />...';
                 }
                 else {
-                    searchResultById[item.discussion_id] = '...' + item.preview;
+                    searchResultById[item.discussion_id] = '...<br />' + item.preview + '<br />...';
                 }
             })
 
@@ -79,7 +92,9 @@ let handler = (req, res) => {
 
                 data.topics = filtered.map(item => {
                     return {
-                        title: item['title'],
+                        title: item['title'].replace(new RegExp(partten, 'ig'), (match) => {
+                            return `<span class="mark">${match}</span>`;
+                        }),
                         id: item['id'],
                         startUser: {
                             avatarPath: '/assets/avatars/' + (item['avatar_path'] || 'default.jpg'),
@@ -95,18 +110,7 @@ let handler = (req, res) => {
                         preview: searchResultById[item['id']] || ''
                     };
                 });
-
-                // Deal with those posts that is sticky
-                let sticky = [];
-                for (let i = 0; i < data.topics.length; ++i) {
-                    if (data.topics[i].isSticky) {
-                        sticky.push(data.topics[i]);
-                        data.topics.splice(i, 1);
-                    }
-                }
-
-                data.topics = sticky.concat(data.topics);
-
+                
                 // Render the page and send to client.
                 res.render('search-result', data);
             });

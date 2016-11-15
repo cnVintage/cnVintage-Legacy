@@ -16,7 +16,7 @@ html
                             td(width="50", height="50"): img(width="50", height="50", src=topic.startUser.avatarPath)
                             td(width="10")
                             td
-                                font(size="4"): a(href=topic.href): font(color="#000000")=topic.title
+                                font(size="4"): a(href=topic.href): font(color="#000000")!=topic.title
                                 br
                                 font(color="#89a970")=`${topic.lastUser.name}${lang.lastReply}${topic.lastDate}`
                             td(width="20", align="center")
