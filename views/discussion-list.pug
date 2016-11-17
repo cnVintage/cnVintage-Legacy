@@ -7,6 +7,7 @@ table(width="100%", border="0", cellspacing="0", cellpadding="0"): tbody
                 font(size="4"): a(href=topic.href): font(color="#000000")=topic.title
                 br
                 font(color="#89a970")=`${topic.lastUser.name}${lang.lastReply}${topic.lastDate}`
+                font(color="#000000")=`  ${topic.tagList || ''}`
             td(width="18", align="center")
                 img(src="/static/reply.jpg")
                 br

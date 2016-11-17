@@ -30,54 +30,78 @@ let handler = (req, res) => {
             };
         });
 
-        // Now is the content of index.
+        // Fetch the discussions <-> tags table.
         conn.query({
-            sql: [
-                'SELECT fl_discussions.id, fl_discussions.title, fl_discussions.slug,',
-                '       fl_discussions.comments_count, fl_discussions.last_time,',
-                '       fl_discussions.start_user_id, fl_discussions.last_user_id,',
-                '       fl_discussions.is_sticky,',
-                '       user1.avatar_path, user1.username as start_user_name,',
-                '       user2.username as last_user_name',
-                'FROM  fl_discussions',
-                'INNER JOIN fl_users user1',
-                '   ON user1.id = start_user_id',
-                'INNER JOIN fl_users user2',
-                '   ON user2.id = last_user_id',
-                'ORDER BY fl_discussions.last_time DESC'
-            ].join(' '),
+            sql: 'SELECT * FROM fl_discussions_tags;'
         }, (err, table) => {
-            data.topics = table.map(item => {
-                return {
-                    title: item['title'],
-                    id: item['id'],
-                    startUser: {
-                        avatarPath: '/assets/avatars/' + (item['avatar_path'] || 'default.jpg'),
-                        name: item['start_user_name'],
-                    },
-                    lastUser: {
-                        name: item['last_user_name'],
-                    },
-                    lastDate: item['last_time'].toLocaleDateString('zh-CN', {timeZone: 'Asia/Shanghai', hour12: false}),
-                    replyCnt: item['comments_count'] - 1,
-                    href: `/d/${item['id']}-${item['slug']}`,
-                    isSticky: item['is_sticky']
-                };
-            });
-
-            // Deal with those posts that is sticky
-            let sticky = [];
-            for (let i = 0; i < data.topics.length; ++i) {
-                if (data.topics[i].isSticky) {
-                    sticky.push(data.topics[i]);
-                    data.topics.splice(i, 1);
-                }
+            let tagMap = {};
+            let getTagNameById = (id) => {
+                let result;
+                data.tags.forEach(tag => {
+                    if (tag.id == id)
+                        result = tag.name;
+                })
+                return result;
             }
 
-            data.topics = sticky.concat(data.topics);
+            table.forEach(row => {
+                if (!tagMap[row.discussion_id]) {
+                    tagMap[row.discussion_id] = [getTagNameById(row.tag_id)];
+                }
+                else {
+                    tagMap[row.discussion_id].push(getTagNameById(row.tag_id));
+                }
+            });
+            // Now is the content of index.
+            conn.query({
+                sql: [
+                    'SELECT fl_discussions.id, fl_discussions.title, fl_discussions.slug,',
+                    '       fl_discussions.comments_count, fl_discussions.last_time,',
+                    '       fl_discussions.start_user_id, fl_discussions.last_user_id,',
+                    '       fl_discussions.is_sticky,',
+                    '       user1.avatar_path, user1.username as start_user_name,',
+                    '       user2.username as last_user_name',
+                    'FROM  fl_discussions',
+                    'INNER JOIN fl_users user1',
+                    '   ON user1.id = start_user_id',
+                    'INNER JOIN fl_users user2',
+                    '   ON user2.id = last_user_id',
+                    'ORDER BY fl_discussions.last_time DESC'
+                ].join(' '),
+            }, (err, table) => {
+                data.topics = table.map(item => {
+                    return {
+                        title: item['title'],
+                        id: item['id'],
+                        startUser: {
+                            avatarPath: '/assets/avatars/' + (item['avatar_path'] || 'default.jpg'),
+                            name: item['start_user_name'],
+                        },
+                        lastUser: {
+                            name: item['last_user_name'],
+                        },
+                        lastDate: item['last_time'].toLocaleDateString('zh-CN', {timeZone: 'Asia/Shanghai', hour12: false}),
+                        replyCnt: item['comments_count'] - 1,
+                        href: `/d/${item['id']}-${item['slug']}`,
+                        isSticky: item['is_sticky'],
+                        tagList: `[${tagMap[item['id']].join('|')}]`
+                    };
+                });
 
-            // Render the page and send to client.
-            res.render('index', data);
+                // Deal with those posts that is sticky
+                let sticky = [];
+                for (let i = 0; i < data.topics.length; ++i) {
+                    if (data.topics[i].isSticky) {
+                        sticky.push(data.topics[i]);
+                        data.topics.splice(i, 1);
+                    }
+                }
+
+                data.topics = sticky.concat(data.topics);
+
+                // Render the page and send to client.
+                res.render('index', data);
+            });
         });
     })
 };
