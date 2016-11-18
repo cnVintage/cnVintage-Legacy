@@ -21,6 +21,10 @@ let handler = (req, res) => {
     conn.query({
         sql: 'SELECT name, color, id, slug FROM fl_tags'
     }, (err, table) => {
+        if (err) {
+            res.render('error', {code: '500', msg: 'MySQL Error.'})
+            return;
+        }
         data.tags = table.map(item => {
             return {
                 name: item.name,
@@ -34,6 +38,10 @@ let handler = (req, res) => {
         conn.query({
             sql: 'SELECT * FROM fl_discussions_tags;'
         }, (err, table) => {
+            if (err) {
+                res.render('error', {code: '500', msg: 'MySQL Error.'})
+                return;
+            }
             let tagMap = {};
             let getTagNameById = (id) => {
                 let result;
@@ -69,6 +77,10 @@ let handler = (req, res) => {
                     'ORDER BY fl_discussions.last_time DESC'
                 ].join(' '),
             }, (err, table) => {
+                if (err) {
+                    res.render('error', {code: '500', msg: 'MySQL Error.'})
+                    return;
+                }
                 data.topics = table.map(item => {
                     return {
                         title: item['title'],

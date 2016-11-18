@@ -18,6 +18,10 @@ let handler = (req, res) => {
     conn.query({
         sql: 'SELECT name, color, id, slug FROM fl_tags'
     }, (err, table) => {
+        if (err) {
+            res.render('error', {code: '500', msg: 'MySQL Error.'})
+            return;
+        }
         data.tags = table.map(item => {
             return {
                 name: item.name,
@@ -31,6 +35,10 @@ let handler = (req, res) => {
         conn.query({
             sql: 'SELECT id, discussion_id, content FROM fl_posts'
         }, (err, table) => {
+            if (err) {
+                res.render('error', {code: '500', msg: 'MySQL Error.'})
+                return;
+            }
             let filter = item => {
                 return (item.content.toLowerCase().indexOf(partten) >= 0);
             }
@@ -69,6 +77,10 @@ let handler = (req, res) => {
             conn.query({
                 sql: 'SELECT * FROM fl_discussions_tags;'
             }, (err, table) => {
+                if (err) {
+                    res.render('error', {code: '500', msg: 'MySQL Error.'})
+                    return;
+                }
                 let tagMap = {};
                 let getTagNameById = (id) => {
                     let result;
@@ -105,6 +117,10 @@ let handler = (req, res) => {
                         'ORDER BY fl_discussions.last_time DESC'
                     ].join(' '),
                 }, (err, table) => {
+                    if (err) {
+                        res.render('error', {code: '500', msg: 'MySQL Error.'})
+                        return;
+                    }
                     let filter = item => {
                         return item['title'].toLowerCase().indexOf(partten) >= 0 || searchResultById[item.id];
                     }

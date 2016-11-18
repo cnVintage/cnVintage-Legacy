@@ -24,6 +24,14 @@ let handler = (req, res) => {
         ].join(' '),
         values: [req.params.id]
     }, (err, table) => {
+        if (err) {
+            res.render('error', {code: '500', msg: 'MySQL Error.'})
+            return;
+        }
+        if (table.length == 0) {
+            res.render('error', {code: '404', msg: 'No Such Discussion.'})
+            return;
+        }
         // Reconstruct the structure of post list.
         data.posts = table.map(row => {
             return {

@@ -14,6 +14,11 @@ let handler = (req, res) => {
     conn.query({
         sql: 'SELECT name, color, id, slug FROM fl_tags'
     }, (err, table) => {
+        if (err) {
+            res.render('error', {code: '500', msg: 'MySQL Error.'})
+            return;
+        }
+
         data.tags = table.map(item => {
             return {
                 name: item.name,
@@ -32,12 +37,24 @@ let handler = (req, res) => {
             ].join(' '),
             values: [req.params.slug],
         }, (err, table) => {
+            if (err) {
+                res.render('error', {code: '500', msg: 'MySQL Error.'})
+                return;
+            }
+            if (!table[0]) {
+                 res.render('error', {code: '404', msg: 'No Such Tag.'})
+                return;
+            }
             let tagId = table[0].id;
             data.title = `${config.lang.tag}: ${table[0].name} - ${config.lang.siteTitle}`;
             // Fetch the discussions <-> tags table.
             conn.query({
                 sql: 'SELECT * FROM fl_discussions_tags;'
             }, (err, table) => {
+                if (err) {
+                    res.render('error', {code: '500', msg: 'MySQL Error.'})
+                    return;
+                }
                 let tagMap = {};
                 let getTagNameById = (id) => {
                     let result;
@@ -78,6 +95,10 @@ let handler = (req, res) => {
                     ].join(' '),
                     values: [tagId],
                 }, (err, table) => {
+                    if (err) {
+                        res.render('error', {code: '500', msg: 'MySQL Error.'})
+                        return;
+                    }
                     data.topics = table.map(item => {
                         return {
                             title: item['title'],
