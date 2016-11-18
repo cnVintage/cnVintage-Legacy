@@ -15,12 +15,12 @@ let sizeOf = require('image-size');
 let handler = (req, res) => {
     // Fetch the url of image that we need to convert.
     let url = req.query.url;
-    let fileName = url.substr(url.lastIndexOf('/') + 1);
     if (!url) {
         res.status(400);
-        res.send('400: Invalid access.');
+        res.render('error', {code: 400, msg: 'Invalid access.'});
         return;
     }
+    let fileName = url.substr(url.lastIndexOf('/') + 1);
 
     // Set correct header.
     res.set('Content-Type', 'image/jpeg');
@@ -34,9 +34,9 @@ let handler = (req, res) => {
                 encoding: null,     // Make sure body is buffer but not string.
             }, (err, response, body) => {
                 if (err) {
-                    res.set('Content-Type', 'text/plain');
+                    res.set('Content-Type', 'text/html');
                     res.status(500);
-                    res.send('500: ' + err);
+                    res.render('error', {code: 500, msg: err});
                     return;
                 }
                 var dimension = sizeOf(body); // Get the image size.
@@ -46,9 +46,9 @@ let handler = (req, res) => {
                     .setFormat('jpg')
                     .toBuffer((err, buffer) => {
                         if (err) {
-                            res.set('Content-Type', 'text/plain');
+                            res.set('Content-Type', 'text/html');
                             res.status(500);
-                            res.send('500: ' + err);
+                            res.render('error', {code: 500, msg: err});
                             return;
                         }
                         res.send(buffer);

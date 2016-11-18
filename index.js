@@ -33,5 +33,10 @@ app.get('/t/:slug', require('./handler-tags'));
 // LaTeX to JPEG
 app.get('/KaTeX/:expr', require('./handler-katex'));
 
+app.use(function(req, res) {
+    res.status(404);
+    res.render('error', { code: 404, msg: 'Page Not Found.'});
+});
+
 app.listen(config.port);
 console.log(`[INFO] Server started on port ${config.port}.`);

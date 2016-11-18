@@ -50,9 +50,9 @@ let handler = (req, res) => {
                 ].join('');
             }
             catch (ex) {
-                res.set('Content-Type', 'text/plain');
+                res.set('Content-Type', 'text/html');
                 res.status(500);
-                res.send('500: ' + ex);
+                res.render('error', {code: 500, msg: ex});
                 return;
             }
 
@@ -70,9 +70,9 @@ let handler = (req, res) => {
                         fs.readFile(`${config.cache}/${hash}.jpg`, (err, content) => {
                             if (err) {
                                 // Oh great success seems to be a failure. Send a 500.
-                                res.set('Content-Type', 'text/plain');
+                                res.set('Content-Type', 'text/html');
                                 res.status(500);
-                                res.send('喵喵喵？');
+                                res.render('error', {code: 500, msg: "喵喵喵？"});
                             }
                             else {
                                 gm(content, "dummy.jpg")
@@ -80,9 +80,9 @@ let handler = (req, res) => {
                                     .setFormat('jpg')
                                     .toBuffer((err, buffer) => {
                                         if (err) {
-                                            res.set('Content-Type', 'text/plain');
+                                            res.set('Content-Type', 'text/html');
                                             res.status(500);
-                                            res.send('500: ' + err);
+                                            res.render('error', {code: 500, msg: err});
                                             return;
                                         }
                                         res.send(buffer);

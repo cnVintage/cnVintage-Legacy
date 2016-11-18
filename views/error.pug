@@ -1,0 +1,50 @@
+html
+  head
+    title Error
+    style.
+      body {
+        background: #0407a4;
+        font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+        color: white;
+        overflow: hidden;
+      }
+      span.title {
+        background-color: #a8a8a8;
+        color: #0407a4;
+        line-height: 1.1em;
+      }
+      a:link, a:active, a:hover, a:visited {
+        color: white;
+        text-decoration: none;
+      }
+  body
+    table(width="100%", height="100%", style="text-align: center;"): tr: td: center
+      div(style="margin: 0 auto; width: 550px;")
+        span.title &nbsp;cnVintage&nbsp;
+        div(style="text-align: left;")
+          p An Error has occurred. To continue:
+          p Press Back to return to previous page, or
+          p Press 
+            a(href="/") this link
+            | go back to the index page.</p>
+          p For technical assistance, please DO NOT contact webmaster,
+            br
+            | because he is not likely to reply, unless you decided to
+            br 
+            | become a "da hui yuan".
+          p Status: #{code} : #{msg}
+        p Pay 450 to continue 
+          span#cursor(style="transition: all ease 0.2s") _
+    script(language="JavaScript").
+      if (document) {
+          var cursor;
+          var state = 1;
+          if (document.all) {
+            cursor = document.all.cursor;
+            setInterval("cursor.style.color = (state > 0) ? (\"#0407a4\") : (\"white\"); state *= -1;", 500);
+          }
+          else if (document.getElementById) {
+            cursor = document.getElementById("cursor");
+            setInterval("cursor.style.color = (state > 0) ? (\"#0407a4\") : (\"white\"); state *= -1;", 500);
+          }
+        }
