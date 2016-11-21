@@ -7,6 +7,7 @@
 
 let db = require('./db');
 let config = require('./config');
+let md5 = require('./md5');
 let gm = require('gm');
 let request = require('request');
 let fs = require('fs');
@@ -21,12 +22,13 @@ let handler = (req, res) => {
         return;
     }
     let fileName = url.substr(url.lastIndexOf('/') + 1);
+    let hash = md5(url);
 
     // Set correct header.
     res.set('Content-Type', 'image/jpeg');
     
     // Check cached file.
-    fs.readFile(`${config.cache}/${fileName}.cached`, (err, content) => {
+    fs.readFile(`${config.cache}/${hash}.cached`, (err, content) => {
         if (err) {  // Not found.
             // Get the buffer of image.
             request.get({
@@ -39,10 +41,11 @@ let handler = (req, res) => {
                     res.render('error', {code: 500, msg: err});
                     return;
                 }
-                var dimension = sizeOf(body); // Get the image size.
+
+                let dimension = sizeOf(body); // Get the image size.
                 gm(body, fileName)
                     .background("#ffffff")
-                    .resize(((dimension.width>640)?(640):(dimension.width)), null)
+                    .resize(((dimension.width > 640) ? (640) : (dimension.width)), null)
                     .setFormat('jpg')
                     .toBuffer((err, buffer) => {
                         if (err) {
@@ -52,7 +55,7 @@ let handler = (req, res) => {
                             return;
                         }
                         res.send(buffer);
-                        fs.writeFile(`${config.cache}/${fileName}.cached`, buffer, () => {});
+                        fs.writeFile(`${config.cache}/${hash}.cached`, buffer, () => {});
                     });
             });
         }
