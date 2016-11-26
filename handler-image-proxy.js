@@ -7,7 +7,7 @@
 
 let db = require('./db');
 let config = require('./config');
-let md5 = require('./md5');
+let md5 = require('./utils').md5;
 let gm = require('gm');
 let request = require('request');
 let fs = require('fs');

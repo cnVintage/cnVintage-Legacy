@@ -1,0 +1,13 @@
+span(style="color: red;")=msg
+form(action="/login", method="POST")
+    table
+        tr
+            td: span 用户名
+            td: input(name="username", type="text")
+        tr
+            td: span 密码
+            td: input(name="password", type="password")
+        tr
+            td
+            td: input(type="submit", value="提交")
+

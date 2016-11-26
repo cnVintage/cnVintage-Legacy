@@ -9,6 +9,9 @@ let handler = (req, res) => {
         lang: config.lang,
     };
 
+    // Fetch the login status
+    data.loginInfo = req.logined ? req.loginInfo : {};
+
     // Get all the posts under the discussion by discussion id.
     conn.query({
         sql: [

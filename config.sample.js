@@ -4,6 +4,7 @@ let config = {
     port: 8080,
     assetsPath: 'C:\\wamp64\\www\\cnvintage\\assets',
     cache: 'C:\\Users\\ntzyz\\AppData\\Local\\Temp\\cnVintage',
+    origUrl: 'http://www.cnvintage.lo',
     mysql: {
         host: '127.0.0.1',
         user: 'root',
@@ -21,7 +22,8 @@ let config = {
         index: '首页',
         searchResult: '搜索结果',
         siteTitle: 'cnVintage',
-        tag: '标签'
+        tag: '标签',
+        logout: '注销'
     }
 }
 

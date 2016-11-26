@@ -8,7 +8,12 @@ form(method="get", action="/"): table(width="100%", border="0", cellspacing="0",
         | &nbsp;
         input(type="submit", name="submit", value="搜索")
         | &nbsp;
-        a(href="/login"): font(color="#FFFFFF")=lang.signin
-        | &nbsp;
-        a(href="/login"): font(color="#FFFFFF")=lang.signup
+        if loginInfo.username
+            font(color="#FFFFFF")=loginInfo.username
+            | &nbsp;
+            a(href="/logout"): font(color="#FFFFFF")=lang.logout
+        else
+            a(href="/login"): font(color="#FFFFFF")=lang.signin
+            | &nbsp;
+            a(href="/login"): font(color="#FFFFFF")=lang.signup
     td(height="40" width="20")

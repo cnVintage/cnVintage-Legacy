@@ -18,7 +18,7 @@ let gm = require('gm').subClass({imageMagick: true});
 let fs = require('fs');
 let stream = require('stream');
 
-let md5 = require('./md5');
+let md5 = require('./utils').md5;
 let config = require('./config');
 let helper = require('./katex-helper');
 
@@ -59,8 +59,10 @@ let handler = (req, res) => {
             // Write to ${hash}.html
             fs.writeFile(`${config.cache}/${hash}.html`, html, (err) => {
                 if (err) {
-                    // I dont wanna think about it now. Handle it later.
-                    throw err;
+                    res.set('Content-Type', 'text/html');
+                    res.status(500);
+                    res.render('error', {code: 500, msg: 'Rneder LaTeX failed.'});
+                    return;
                 }
                 helper.getTaskQueue().push({
                     command: `xvfb-run --server-args="-screen 0 640x480x24" wkhtmltoimage ${config.cache}/${hash}.html ${config.cache}/${hash}.jpg`,

@@ -9,6 +9,9 @@ let handler = (req, res) => {
         lang: config.lang,
     };
 
+    // Fetch the login status
+    data.loginInfo = req.logined ? req.loginInfo : {};
+
     // Fetch all the tags' information from database.
     let conn = db.getConn();
     conn.query({

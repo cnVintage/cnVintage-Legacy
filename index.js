@@ -2,8 +2,13 @@
 
 let express = require('express');
 let config = require('./config');
+let cookieParser = require('cookie-parser');
+let bodyParser = require('body-parser');
 
 let app = express();
+app.use(cookieParser());
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
 
 // use pug to render html code.
 app.set('view engine', 'pug');
@@ -19,21 +24,28 @@ app.use((req, res, next) => {
 })
 
 // Index page
+app.get('/', require('./login-checker'));
 app.get('/', require('./handler-index'));
+
+// Discussion detail page.
+app.get('/d/:id-:name', require('./login-checker'));
+app.get('/d/:id-:name', require('./handler-discussion'));
+
+// Tags view.
+app.get('/t/:slug', require('./login-checker'));
+app.get('/t/:slug', require('./handler-tags'));
+
+// Login
+app.get('/login', require('./handler-login').get);
+app.post('/login', require('./handler-login').post);
 
 // Image proxy
 app.get('/imgProxy', require('./handler-image-proxy'));
 
-// Discussion detail page.
-app.get('/d/:id-:name', require('./handler-discussion'));
-
-// Tags view.
-app.get('/t/:slug', require('./handler-tags'));
-
 // LaTeX to JPEG
 app.get('/KaTeX/:expr', require('./handler-katex'));
 
-app.use(function(req, res) {
+ app.use(function(req, res) {
     res.status(404);
     res.render('error', { code: 404, msg: 'Page Not Found.'});
 });

@@ -16,6 +16,9 @@ let handler = (req, res) => {
         title: `${config.lang.index} - ${config.lang.siteTitle}`,
     };
 
+    // Fetch the login status
+    data.loginInfo = req.logined ? req.loginInfo : {};
+
     // Fetch all the tags' information from database.
     let conn = db.getConn();
     conn.query({
