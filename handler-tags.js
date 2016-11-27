@@ -41,11 +41,13 @@ let handler = (req, res) => {
             values: [req.params.slug],
         }, (err, table) => {
             if (err) {
+                res.status(500);
                 res.render('error', {code: '500', msg: 'MySQL Error.'})
                 return;
             }
             if (!table[0]) {
-                 res.render('error', {code: '404', msg: 'No Such Tag.'})
+                res.status(404);
+                res.render('error', {code: '404', msg: 'No Such Tag.'})
                 return;
             }
             let tagId = table[0].id;

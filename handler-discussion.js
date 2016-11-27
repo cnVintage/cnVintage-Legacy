@@ -28,10 +28,12 @@ let handler = (req, res) => {
         values: [req.params.id]
     }, (err, table) => {
         if (err) {
+            res.status(500);
             res.render('error', {code: '500', msg: 'MySQL Error.'})
             return;
         }
         if (table.length == 0) {
+            res.status(404);
             res.render('error', {code: '404', msg: 'No Such Discussion.'})
             return;
         }
