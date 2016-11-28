@@ -51,7 +51,9 @@ let main = () => {
     testQueue.push(require('./site-search'));
     testQueue.push(require('./site-discussview'));
     testQueue.push(require('./katex-render'));
-    testQueue.start();
+    setTimeout(() => {
+        testQueue.start();
+    }, 1000);
 };
 
 main();
