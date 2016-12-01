@@ -19,10 +19,7 @@ let getHandler = (req, res) => {
 let postHandler = (req, res) => {
     let server = {req, res};
     console.info('[INFO][POST-LOGIN] Login request received.');
-    console.info('[INFO][POST-LOGIN] POST login info to ' + config.origUrl + '/login ... with data: ' +  JSON.stringify({
-        identification: req.body.username,
-        password: req.body.password
-    }));
+    console.info('[INFO][POST-LOGIN] POST login info to ' + config.origUrl + '/login ...');
     request.post({
         url: `${config.origUrl}/login`,
         header: {
