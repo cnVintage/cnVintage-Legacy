@@ -7,6 +7,8 @@ let handler = (req, res) => {
     let conn = db.getConn();
     let data = {
         lang: config.lang,
+        discussion_id: req.params.id,
+        url: req.url
     };
 
     // Fetch the login status
@@ -23,7 +25,7 @@ let handler = (req, res) => {
             'ON fl_users.id = fl_posts.user_id',
             'INNER JOIN fl_discussions',
             'ON fl_discussions.id = discussion_id',
-            'WHERE fl_discussions.id = ?;',
+            'WHERE fl_discussions.id = ? AND fl_posts.hide_user_id IS NULL;',
         ].join(' '),
         values: [req.params.id]
     }, (err, table) => {

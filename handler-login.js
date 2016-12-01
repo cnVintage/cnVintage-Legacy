@@ -9,13 +9,6 @@ let getHandler = (req, res) => {
     res.render('login');
 };
 
-/**
- * With the help of Chrome DevTools, we can find how to get the access token with curl:
- * curl 'http://www.cnvintage.lo/login' \
- *  -H 'Content-Type: application/json; charset=UTF-8' \
- *  --data-binary '{"identification":"<USERNAME>","password":"<USERPASS>"}'
- */
-
 let postHandler = (req, res) => {
     let server = {req, res};
     console.info('[INFO][POST-LOGIN] Login request received.');

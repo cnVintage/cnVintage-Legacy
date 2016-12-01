@@ -1,0 +1,5 @@
+div#reply
+    form(action="/posts?redirect=" + url, method="POST")
+        textarea(name="content")
+        input(type="hidden", value=discussion_id, name="discussion_id")
+        input(type="submit", value="Reply")
