@@ -11,8 +11,9 @@ Working in progress.
 - [X] LaTeX to JPG.
 - [X] PNG to JPG.
 - [X] Search.
+- [X] Login and reply.
 - [ ] User page.
-- [ ] Login and reply.
+- [ ] New discussion.
 
 ## Licenses
 >The MIT License (MIT)
