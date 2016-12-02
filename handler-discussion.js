@@ -58,6 +58,8 @@ let handler = (req, res) => {
                     return `<img src="/KaTeX/${encodeURIComponent(expr)}"></img>`
                 }).replace(/<HR>([^]+?)<\/HR>/g, (match, p1) => {
                     return `<hr />`
+                }).replace(/@(.+?)#\d+/, (match, p1) => {
+                    return `<font size="3" color="#337000">${config.lang.replyTo}${p1}:</font> `
                 }),
                 avatarPath: '/assets/avatars/' + (row.avatar_path || 'default.jpg')
             }

@@ -23,7 +23,9 @@ let config = {
         searchResult: '搜索结果',
         siteTitle: 'cnVintage',
         tag: '标签',
-        logout: '注销'
+        logout: '注销',
+        reply: '回复',
+        replyTo: '回复给',
     }
 }
 

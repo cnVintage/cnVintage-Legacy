@@ -15,7 +15,14 @@ let middleware = (req, res, next) => {
 
         // Get more info about the access_token
         conn.query({
-            sql: 'SELECT fl_access_tokens.id, fl_access_tokens.user_id, fl_access_tokens.last_activity, fl_access_tokens.lifetime, username FROM fl_access_tokens INNER JOIN fl_users ON fl_users.id = user_id WHERE fl_access_tokens.id = ?',
+            sql: [
+                'SELECT fl_access_tokens.id, fl_access_tokens.user_id, fl_access_tokens.last_activity,',
+                '       fl_access_tokens.lifetime, fl_users.username, fl_users.avatar_path',
+                'FROM   fl_access_tokens ',
+                'INNER JOIN fl_users ',
+                '        ON fl_users.id = user_id ',
+                'WHERE fl_access_tokens.id = ?'
+            ].join(' '),
             values: [req.cookies.access_token]
         }, (err, table) => {
             if (err) {
@@ -35,6 +42,7 @@ let middleware = (req, res, next) => {
                     userName: table[0].username,
                     lastActivity: table[0].last_activity,
                     lifetime: table[0].lifetime,
+                    avatar: table[0].avatar_path,
                 }
                 // Check if expired.
                 if (Math.ceil(Date.now() / 1000) > tokenInfo.lifetime + tokenInfo.lastActivity) {

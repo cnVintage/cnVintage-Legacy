@@ -35,7 +35,28 @@ html
                             td(height="10px")
                             td(height="10px")
                             td(height="10px")
+                    if loginInfo.username
+                        - let color = index++ % 2 == 0 ? "#FFFFFF": "#EEEEEE"
+                        tr(bgcolor=color)
+                            td(height="10px")
+                            td(height="10px", width="50px")
+                            td(height="10px")
+                            td(height="10px")
+                            td(height="10px")
+                        tr(bgcolor=color)
+                            td(width="10px")
+                            td(valign="top", width="50px"): img(width="50px", src=loginInfo.avatar || 'default.jpg')
+                            td(width="10px")
+                            td: form(action="/posts?redirect=" + url, method="POST")
+                                textarea(name="content", style="width: 100%; resize: none; height: 100px; display: block; margin-bottom: 4px;")
+                                input(type="hidden", value=discussion_id, name="discussion_id")
+                                input(type="submit", value=lang.reply)
+                            td(width="10px")
+                        tr(bgcolor=color)
+                            td(height="10px")
+                            td(height="10px", width="50px")
+                            td(height="10px")
+                            td(height="10px")
+                            td(height="10px")
             td(width="20")
-        if loginInfo.username
-            include ./reply
         include ./footer.pug
