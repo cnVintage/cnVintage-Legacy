@@ -42,7 +42,7 @@ let middleware = (req, res, next) => {
                     userName: table[0].username,
                     lastActivity: table[0].last_activity,
                     lifetime: table[0].lifetime,
-                    avatar: table[0].avatar_path,
+                    avatar: '/assets/avatars/' + (table[0].avatar_path || 'default.jpg'),
                 }
                 // Check if expired.
                 if (Math.ceil(Date.now() / 1000) > tokenInfo.lifetime + tokenInfo.lastActivity) {
@@ -56,6 +56,7 @@ let middleware = (req, res, next) => {
                     req.logined = true;
                     req.loginInfo = {
                         username: tokenInfo.userName,
+                        avatar: tokenInfo.avatar
                     }
                     next();
                 }

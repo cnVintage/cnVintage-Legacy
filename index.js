@@ -39,6 +39,10 @@ app.get('/t/:slug', require('./handler-tags'));
 app.get('/login', require('./handler-login').get);
 app.post('/login', require('./handler-login').post);
 
+// Logout
+app.get('/logout', require('./login-checker'));
+app.get('/logout', require('./handler-logout'));
+
 // Reply & post.
 app.post('/posts', require('./handler-post'));
 app.post('/posts', require('./handler-post'));
