@@ -26,6 +26,10 @@ let config = {
         logout: '注销',
         reply: '回复',
         replyTo: '回复给',
+        newDiscussion: '新的话题',
+        discussionTitle: '标题',
+        discussionContent: '内容',
+        publish: '发布',
     }
 }
 
