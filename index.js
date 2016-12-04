@@ -25,33 +25,33 @@ app.use((req, res, next) => {
 
 // Index page
 app.get('/', require('./login-checker'));
-app.get('/', require('./handler-index'));
+app.get('/', require('./handler/index'));
 
 // Discussion detail page.
 app.get('/d/:id-:name', require('./login-checker'));
-app.get('/d/:id-:name', require('./handler-discussion'));
+app.get('/d/:id-:name', require('./handler/discussion'));
 
 // Tags view.
 app.get('/t/:slug', require('./login-checker'));
-app.get('/t/:slug', require('./handler-tags'));
+app.get('/t/:slug', require('./handler/tags'));
 
 // Login
-app.get('/login', require('./handler-login').get);
-app.post('/login', require('./handler-login').post);
+app.get('/login', require('./handler/login').get);
+app.post('/login', require('./handler/login').post);
 
 // Logout
 app.get('/logout', require('./login-checker'));
-app.get('/logout', require('./handler-logout'));
+app.get('/logout', require('./handler/logout'));
 
 // Reply & post.
-app.post('/posts', require('./handler-post'));
-app.post('/posts', require('./handler-post'));
+app.post('/posts', require('./handler/post'));
+app.post('/posts', require('./handler/post'));
 
 // Image proxy
-app.get('/imgProxy', require('./handler-image-proxy'));
+app.get('/imgProxy', require('./handler/image-proxy'));
 
 // LaTeX to JPEG
-app.get('/KaTeX/:expr', require('./handler-katex'));
+app.get('/KaTeX/:expr', require('./handler/katex'));
 
  app.use(function(req, res) {
     res.status(404);
