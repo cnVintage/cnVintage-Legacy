@@ -12,8 +12,8 @@ Working in progress.
 - [X] PNG to JPG.
 - [X] Search.
 - [X] Login and reply.
+- [X] New discussion.
 - [ ] User page.
-- [ ] New discussion.
 
 ## Licenses
 >The MIT License (MIT)
