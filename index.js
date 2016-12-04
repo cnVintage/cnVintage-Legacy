@@ -47,6 +47,11 @@ app.get('/logout', require('./handler/logout'));
 app.post('/posts', require('./handler/post'));
 app.post('/posts', require('./handler/post'));
 
+// New discussion
+app.all('/new', require('./login-checker'));
+app.get('/new', require('./handler/new').get);
+app.post('/new', require('./handler/new').post);
+
 // Image proxy
 app.get('/imgProxy', require('./handler/image-proxy'));
 
