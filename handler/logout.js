@@ -6,7 +6,6 @@ let request = require('request').defaults({jar: true});
 
 let handler = (req, res) => {
     if (req.logined) {
-        console.log('222');
         let token = req.cookies.access_token;
         let conn = db.getConn();
         conn.query({
