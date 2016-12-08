@@ -96,6 +96,7 @@ let handler = (req, res) => {
                         'INNER JOIN fl_discussions_tags',
                         '   ON fl_discussions_tags.tag_id = ?',
                         'WHERE fl_discussions.id = fl_discussions_tags.discussion_id',
+                        'AND   fl_discussions.comments_count != 0',
                         'ORDER BY fl_discussions.last_time DESC'
                     ].join(' '),
                     values: [tagId],
