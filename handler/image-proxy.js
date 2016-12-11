@@ -42,7 +42,17 @@ let handler = (req, res) => {
                     return;
                 }
 
-                let dimension = sizeOf(body); // Get the image size.
+                let dimension;
+                try {
+                    dimension = sizeOf(body); // Get the image size.
+                }
+                catch(ex) {
+                    console.log(ex);
+                    res.set('Content-Type', 'text/html');
+                    res.status(500);
+                    res.render('error', {code: 500, msg: 'Not a Image'});
+                    return;
+                }
                 gm(body, fileName)
                     .background("#ffffff")
                     .resize(((dimension.width > 640) ? (640) : (dimension.width)), null)
