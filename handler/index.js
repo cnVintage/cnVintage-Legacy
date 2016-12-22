@@ -115,6 +115,10 @@ let handler = (req, res) => {
 
                 data.topics = sticky.concat(data.topics);
 
+                let currentPage = data.currentPage = req.query.page || 1; currentPage--;
+                let maxPages = data.maxPages = Math.floor(data.topics.length / config.postsPerPage) + 1;
+                data.topics = data.topics.slice(currentPage * config.postsPerPage, Math.min((currentPage + 1) * config.postsPerPage, data.topics.length));
+
                 // Render the page and send to client.
                 res.render('index', data);
             });

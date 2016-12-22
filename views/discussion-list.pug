@@ -13,4 +13,21 @@ table(width="100%", border="0", cellspacing="0", cellpadding="0"): tbody
                 br
                 span=topic.replyCnt
         tr: td(height="10")
-
+    if maxPages && maxPages !== 1
+        tr
+            td(width="50")
+            td(width="10")
+            td
+                table: tbody: tr                    
+                    if Number(currentPage) !== 1
+                        td(width="25"): a(href=`?page=${Number(currentPage) - 1}`): span(style="width: 20px; height:20px; display: inline-block; line-height: 20px; text-align: center; border: 1px solid #89a970;"): font(color="#337000")=`<`
+                    else
+                        td(width="25"): span(style="width: 20px; height:20px; display: inline-block; line-height: 20px; text-align: center; border: 1px solid #DDDDDD;"): font(color="#DDDDDD")=`<`
+                    each page in new Array(Number(maxPages)).fill(0).map((i,n) => n + 1)
+                        td(width="25"): a(href=`?page=${page}`): span(style="width: 20px; height:20px; display: inline-block; line-height: 20px; text-align: center; border: 1px solid #89a970;"): font(color="#337000")=`${page}`
+                    if Number(currentPage) !== Number(maxPages)
+                        td(width="25"): a(href=`?page=${Number(currentPage) + 1}`): span(style="width: 20px; height:20px; display: inline-block; line-height: 20px; text-align: center; border: 1px solid #89a970;"): font(color="#337000")=`>`
+                    else
+                        td(width="25"): span(style="width: 20px; height:20px; display: inline-block; line-height: 20px; text-align: center; border: 1px solid #DDDDDD;"): font(color="#DDDDDD")=`>`
+            td()
+        tr: td(height="10")

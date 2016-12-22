@@ -42,3 +42,10 @@ h3 {
 .tagList {
     margin-right: 10px
 }
+
+a:link, a:hover, a:visited, a:active {
+    display: inline;
+    color: inherit;
+    cursor: hand;
+    text-decoration: none;
+}

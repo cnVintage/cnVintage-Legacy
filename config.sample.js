@@ -2,9 +2,10 @@
 
 let config = {
     port: 8080,
-    assetsPath: 'C:\\wamp64\\www\\cnvintage\\assets',
-    cache: 'C:\\Users\\ntzyz\\AppData\\Local\\Temp\\cnVintage',
+    assetsPath: '/var/www/html/assets/',
+    cache: '/tmp/',
     origUrl: 'http://www.cnvintage.lo',
+    postsPerPage: 10,
     mysql: {
         host: '127.0.0.1',
         user: 'root',
