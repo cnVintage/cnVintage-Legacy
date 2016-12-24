@@ -49,3 +49,34 @@ a:link, a:hover, a:visited, a:active {
     cursor: hand;
     text-decoration: none;
 }
+
+.pageButton {
+    width: 20px;
+    height:20px;
+    display: inline-block;
+    line-height: 20px;
+    text-align: center;
+    color: #337000;
+    border: 1px solid #89a970;
+}
+
+.activeButton {
+    width: 20px;
+    height:20px;
+    display: inline-block;
+    line-height: 20px;
+    text-align: center;
+    color: white;
+    border: 1px solid #89a970;
+    background: #337000;
+}
+
+.disableButton {
+    width: 20px;
+    height:20px;
+    display: inline-block;
+    line-height: 20px;
+    text-align: center;
+    border: 1px solid #89a970;
+    color: #dddddd;
+}
