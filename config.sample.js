@@ -13,9 +13,7 @@ let config = {
         database: 'forum',
     },
     lang: {
-        newTopic: '新的话题',
         lastReply: ' 最后回复于 ',
-        daysBefore: ' 天前',
         legacy: '简易版',          // 雾
         search: '搜索',
         signin: '登陆',
@@ -31,6 +29,7 @@ let config = {
         discussionTitle: '标题',
         discussionContent: '内容',
         publish: '发布',
+        emptyset: '没听过这个说法',
     }
 }
 

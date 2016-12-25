@@ -11,7 +11,6 @@ let md5 = require('../utils').md5;
 let gm = require('gm');
 let request = require('request');
 let fs = require('fs');
-let sizeOf = require('image-size');
 
 let handler = (req, res) => {
     // Fetch the url of image that we need to convert.
@@ -42,31 +41,29 @@ let handler = (req, res) => {
                     return;
                 }
 
-                let dimension;
-                try {
-                    dimension = sizeOf(body); // Get the image size.
-                }
-                catch(ex) {
-                    console.log(ex);
-                    res.set('Content-Type', 'text/html');
-                    res.status(500);
-                    res.render('error', {code: 500, msg: 'Not a Image'});
-                    return;
-                }
-                gm(body, fileName)
-                    .background("#ffffff")
-                    .resize(((dimension.width > 640) ? (640) : (dimension.width)), null)
-                    .setFormat('jpg')
-                    .toBuffer((err, buffer) => {
-                        if (err) {
-                            res.set('Content-Type', 'text/html');
-                            res.status(500);
-                            res.render('error', {code: 500, msg: err});
-                            return;
-                        }
-                        res.send(buffer);
-                        fs.writeFile(`${config.cache}/${hash}.cached`, buffer, () => {});
-                    });
+                gm(body, fileName).size((err, size) => {
+                    if (err) {
+                        console.log(err);
+                        res.set('Content-Type', 'text/html');
+                        res.status(500);
+                        res.render('error', {code: 500, msg: 'Not a Image'});
+                        return;
+                    }
+                    gm(body, fileName)
+                        .background("#ffffff")
+                        .resize(((size.width > 640) ? (640) : (size.width)), null)
+                        .setFormat('jpg')
+                        .toBuffer((err, buffer) => {
+                            if (err) {
+                                res.set('Content-Type', 'text/html');
+                                res.status(500);
+                                res.render('error', {code: 500, msg: err});
+                                return;
+                            }
+                            res.send(buffer);
+                            fs.writeFile(`${config.cache}/${hash}.cached`, buffer, () => {});
+                        });
+                });
             });
         }
         else {

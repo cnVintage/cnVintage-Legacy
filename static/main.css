@@ -45,9 +45,12 @@ h3 {
 
 a:link, a:hover, a:visited, a:active {
     display: inline;
-    color: inherit;
     cursor: hand;
     text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
 }
 
 .pageButton {
@@ -79,4 +82,9 @@ a:link, a:hover, a:visited, a:active {
     text-align: center;
     border: 1px solid #89a970;
     color: #dddddd;
+}
+
+.mention {
+    background: #ecf6e4;
+    color: #7d9966 !important;
 }

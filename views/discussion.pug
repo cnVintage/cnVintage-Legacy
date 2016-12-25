@@ -25,7 +25,7 @@ html
                             td(width="10px")
                             td
                                 p
-                                    font(size="3")!=post.userName + '&nbsp;'
+                                    font(size="3")!=`<a href="/u/${ post.userName }" style="color: black;">${ post.userName }</a>&nbsp;`
                                     font(size="3", color="#337000")!=post.date
                                     font(size="3")!='&nbsp;#' + index
                                 !=post.content

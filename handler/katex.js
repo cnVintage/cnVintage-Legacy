@@ -41,7 +41,6 @@ let handler = (req, res) => {
                     '<html>',
                         '<head>',
                             '<meta charset="UTF-8"/>',
-                            '<link href="http://cdn.bootcss.com/KaTeX/0.5.1/katex.min.css" rel="stylesheet">',
                         '</head>',
                         '<body>',
                             katex.renderToString(expr),
