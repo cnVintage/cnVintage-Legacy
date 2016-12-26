@@ -34,7 +34,6 @@ let handler = (req, res) => {
         jar: cookieJar
     }, (err, response, body) => {
         res.redirect(req.query.redirect || '/');
-        // console.log(JSON.stringify(body, null, 2));
     })
 };
 

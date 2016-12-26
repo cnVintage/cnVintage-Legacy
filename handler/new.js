@@ -113,7 +113,16 @@ let postHandler = (req, res) => {
             },
             jar: cookieJar
         }, (err, response, body) => {
-            res.redirect(`/d/${body.data.id}-${body.data.attributes.title}`);
+            if (!body.data) {
+                data.title = req.body.title;
+                data.content = req.body.content;
+                data.errmsg = 'Please wait for a while...';
+                res.render('new', data);
+                return;
+            }
+            else {
+                res.redirect(`/d/${body.data.id}-${body.data.attributes.title}`);
+            }
         })
     });
 }
