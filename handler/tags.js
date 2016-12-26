@@ -97,6 +97,7 @@ let handler = (req, res) => {
                         '   ON fl_discussions_tags.tag_id = ?',
                         'WHERE fl_discussions.id = fl_discussions_tags.discussion_id',
                         'AND   fl_discussions.comments_count != 0',
+                        'AND   fl_discussions.hide_time IS NULL',
                         'ORDER BY fl_discussions.last_time DESC'
                     ].join(' '),
                     values: [tagId],

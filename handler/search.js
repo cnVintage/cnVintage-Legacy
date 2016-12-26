@@ -118,6 +118,7 @@ let handler = (req, res) => {
                         'INNER JOIN fl_users user2',
                         '   ON user2.id = last_user_id',
                         'WHERE fl_discussions.comments_count != 0',
+                        'AND   fl_discussions.hide_time IS NULL',
                         'ORDER BY fl_discussions.last_time DESC'
                     ].join(' '),
                 }, (err, table) => {
