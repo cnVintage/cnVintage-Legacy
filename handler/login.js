@@ -11,8 +11,7 @@ let getHandler = (req, res) => {
 
 let postHandler = (req, res) => {
     let server = {req, res};
-    console.info('[INFO][POST-LOGIN] Login request received.');
-    console.info('[INFO][POST-LOGIN] POST login info to ' + config.origUrl + '/login ...');
+    console.info(`[INFO][login.js] Login request received, remote user name: ${req.body.username}`);
     request.post({
         url: `${config.origUrl}/login`,
         header: {
@@ -24,7 +23,6 @@ let postHandler = (req, res) => {
             password: req.body.password
         }
     }, (err, res, body) => {
-        console.info('[INFO][POST-LOGIN] Done, result is: ' + body);
         if (typeof body.errors === 'undefined') {
             server.res.cookie('access_token', body.token, {
                 path: '/',

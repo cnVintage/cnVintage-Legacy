@@ -1,6 +1,7 @@
 'use strict';
 
 let crypto = require('crypto');
+let fs = require('fs');
 let config = require('./config');
 
 let randomString = (length) => {
@@ -10,24 +11,27 @@ let randomString = (length) => {
         res += possible.charAt(Math.floor(Math.random() * possible.length));
     return res;
 }
-/*
-let algorithm = config.cookieOption.algorithm;
-let password = config.cookieOption.password || randomString(20);
-*/
+
+
+(function() {
+    config.log || console.log('[WARN] Log file is undefined!');
+})();
+
+let logTool = (req, res, next) => {
+    let content = `[${new Date().toLocaleString()}] ${req.headers['x-real-ip'] || req.ip}: ${req.method} ${req.url}`;
+    console.log(content);
+    content += '\n';
+    config.log && fs.appendFile(config.log, content, (err) => {
+        if (err) {
+            fs.writeFile(config.log, content, () => {})
+        }
+    });
+    next();
+}
+
 module.exports = {
     md5: function (content) {
         return require('crypto').createHash('md5').update(content, 'utf8').digest('hex');
-    },/*
-    encrypy: function (content) {
-        let cipher = crypto.createCipher(algorithm, password)
-        let crypted = cipher.update(content, 'utf8', 'hex')
-        crypted += cipher.final('hex');
-        return crypted;
     },
-    decrypt: function (content ) {
-        let decipher = crypto.createDecipher(algorithm, password)
-        let dec = decipher.update(content, 'hex', 'utf8')
-        dec += decipher.final('utf8');
-        return dec;
-    }*/
+    logTool
 }

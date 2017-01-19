@@ -67,7 +67,6 @@ let handler = (req, res) => {
                 helper.getTaskQueue().push({
                     command: `xvfb-run --server-args="-screen 0 640x480x24" wkhtmltoimage ${config.cache}/${hash}.html ${config.cache}/${hash}.jpg`,
                     callback: function (err, stdout, stderr) {
-                        // console.log([err, stdout, stderr]);
                         // Let's just ignore [err, stdout, stderr] and assume that we had a great success. Read image from file.
                         fs.readFile(`${config.cache}/${hash}.jpg`, (err, content) => {
                             if (err) {
