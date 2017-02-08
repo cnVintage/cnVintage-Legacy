@@ -20,11 +20,11 @@ let disconnectHandler = function() {
         conn = mysql.createConnection(require('./config').mysql);
         disconnectHandler();
     });
-}
+};
 disconnectHandler();
 
 module.exports = {
     getConn: function() {
         return conn;
     }
-}
+};

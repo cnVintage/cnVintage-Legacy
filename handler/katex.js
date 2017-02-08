@@ -16,7 +16,6 @@
 let katex = require('katex');
 let gm = require('gm').subClass({imageMagick: true});
 let fs = require('fs');
-let stream = require('stream');
 
 let md5 = require('../utils').md5;
 let config = require('../config');
@@ -39,13 +38,13 @@ let handler = (req, res) => {
                 html = [
                     '<!DOCTYPE html>',
                     '<html>',
-                        '<head>',
-                            '<meta charset="UTF-8"/>',
-							'<link href="http://cdn.bootcss.com/KaTeX/0.5.1/katex.min.css" rel="stylesheet">',
-                        '</head>',
-                        '<body>',
-                            katex.renderToString(expr),
-                        '</body>',
+                    '<head>',
+                    '<meta charset="UTF-8"/>',
+                    '<link href="http://cdn.bootcss.com/KaTeX/0.5.1/katex.min.css" rel="stylesheet">',
+                    '</head>',
+                    '<body>',
+                    katex.renderToString(expr),
+                    '</body>',
                     '</html>'
                 ].join('');
             }
@@ -66,17 +65,17 @@ let handler = (req, res) => {
                 }
                 helper.getTaskQueue().push({
                     command: `xvfb-run --server-args="-screen 0 640x480x24" wkhtmltoimage ${config.cache}/${hash}.html ${config.cache}/${hash}.jpg`,
-                    callback: function (err, stdout, stderr) {
+                    callback: function (/*err, stdout, stderr*/) {
                         // Let's just ignore [err, stdout, stderr] and assume that we had a great success. Read image from file.
                         fs.readFile(`${config.cache}/${hash}.jpg`, (err, content) => {
                             if (err) {
                                 // Oh great success seems to be a failure. Send a 500.
                                 res.set('Content-Type', 'text/html');
                                 res.status(500);
-                                res.render('error', {code: 500, msg: "喵喵喵？"});
+                                res.render('error', {code: 500, msg: '喵喵喵？'});
                             }
                             else {
-                                gm(content, "dummy.jpg")
+                                gm(content, 'dummy.jpg')
                                     .trim()
                                     .setFormat('jpg')
                                     .toBuffer((err, buffer) => {
@@ -87,16 +86,16 @@ let handler = (req, res) => {
                                             return;
                                         }
                                         res.send(buffer);
-                                        fs.writeFile(`${config.cache}/${hash}.trim.jpg`, buffer, () => {})
+                                        fs.writeFile(`${config.cache}/${hash}.trim.jpg`, buffer, () => {});
                                     });
                             }
-                        })
+                        });
                     }
                 });
-            })
+            });
         }
         else {
-             res.send(content);
+            res.send(content);
         }
     });
 };

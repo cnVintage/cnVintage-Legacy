@@ -1,6 +1,5 @@
 'use strict';
 
-let db = require('../db');
 let config = require('../config');
 let utils = require('../utils');
 let request = require('request');
@@ -11,7 +10,7 @@ let getHandler = (req, res) => {
 
 let postHandler = (req, res) => {
     let server = {req, res};
-    console.info(`[INFO][login.js] Login request received, remote user name: ${req.body.username}`);
+    utils.log(`[INFO][login.js] Login request received, remote user name: ${req.body.username}`);
     request.post({
         url: `${config.origUrl}/login`,
         header: {
@@ -28,13 +27,13 @@ let postHandler = (req, res) => {
                 path: '/',
                 httpOnly: true,
                 expires: new Date(Date.now() + 2678400000)
-            })
+            });
             server.res.redirect(301, '/');
         }
         else {
             server.res.render('login', {msg: '错误的用户名或密码'});
         }
-    })
+    });
 };
 
 module.exports = {

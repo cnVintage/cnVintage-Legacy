@@ -40,4 +40,4 @@ module.exports = {
     getTaskQueue: function() {
         return taskQueue;
     }
-}
+};

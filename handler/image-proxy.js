@@ -5,12 +5,11 @@
 
 'use strict';
 
-let db = require('../db');
 let config = require('../config');
-let md5 = require('../utils').md5;
 let gm = require('gm');
 let request = require('request');
 let fs = require('fs');
+let utils = require('./utils');
 
 let handler = (req, res) => {
     // Fetch the url of image that we need to convert.
@@ -21,7 +20,7 @@ let handler = (req, res) => {
         return;
     }
     let fileName = url.substr(url.lastIndexOf('/') + 1);
-    let hash = md5(url);
+    let hash = utils.md5(url);
 
     // Set correct header.
     res.set('Content-Type', 'image/jpeg');
@@ -43,14 +42,14 @@ let handler = (req, res) => {
 
                 gm(body, fileName).size((err, size) => {
                     if (err) {
-                        console.log(err);
+                        utils.log(err);
                         res.set('Content-Type', 'text/html');
                         res.status(500);
                         res.render('error', {code: 500, msg: 'Not a Image'});
                         return;
                     }
                     gm(body, fileName)
-                        .background("#ffffff")
+                        .background('#ffffff')
                         .resize(((size.width > 640) ? (640) : (size.width)), null)
                         .setFormat('jpg')
                         .toBuffer((err, buffer) => {
@@ -70,7 +69,7 @@ let handler = (req, res) => {
             // Cache HIT! Just send it back.
             res.send(content);
         }
-    })
+    });
 };
 
 module.exports = handler;

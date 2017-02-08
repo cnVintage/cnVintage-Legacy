@@ -1,4 +1,5 @@
 'use strict';
+/*eslint no-console: ["error", { allow: ["warn", "error", "log"] }] */
 
 let test = [{
     name: 'Katex render with valid expression test.',
@@ -7,7 +8,7 @@ let test = [{
         let config = require('../config');
         request.get({
             url: 'http://localhost:' + config.port + '/KaTeX/%20x%20%3D%20%7B-b%20%5Cpm%20%5Csqrt%7Bb%5E2-4ac%7D%20%5Cover%202a%7D.' + Math.random()
-        }, (err, res, body) => {
+        }, (err, res) => {
             if (err) {
                 error('Request error: ' + err);
             }
@@ -17,7 +18,7 @@ let test = [{
             else {
                 error('Response error: Status code should be 200, but got a ' + res.statusCode);
             }
-        })
+        });
     },
 }, {
     name: 'Katex render with invalid expression test.',
@@ -26,7 +27,7 @@ let test = [{
         let config = require('../config');
         request.get({
             url: 'http://localhost:' + config.port + '/KaTeX/%5CLaTeX'
-        }, (err, res, body) => {
+        }, (err, res) => {
             if (err) {
                 error('Request error: ' + err);
             }
@@ -36,9 +37,9 @@ let test = [{
             else {
                 error('Response error: Status code should be 500, but got a ' + res.statusCode);
             }
-        })
+        });
     },
 },
-]
+];
 
 module.exports = test;

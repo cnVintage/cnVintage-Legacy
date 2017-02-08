@@ -21,7 +21,7 @@ let getHandler = (req, res) => {
         sql: 'SELECT name, color, id, slug FROM fl_tags'
     }, (err, table) => {
         if (err) {
-            res.render('error', {code: '500', msg: 'MySQL Error.'})
+            res.render('error', {code: '500', msg: 'MySQL Error.'});
             return;
         }
         data.tags = table.map(item => {
@@ -34,7 +34,7 @@ let getHandler = (req, res) => {
         });
         res.render('new', data);
     });
-}
+};
 
 let postHandler = (req, res) => {
     if (!req.logined) {
@@ -54,7 +54,7 @@ let postHandler = (req, res) => {
         sql: 'SELECT name, color, id, slug FROM fl_tags'
     }, (err, table) => {
         if (err) {
-            res.render('error', {code: '500', msg: 'MySQL Error.'})
+            res.render('error', {code: '500', msg: 'MySQL Error.'});
             return;
         }
 
@@ -75,12 +75,12 @@ let postHandler = (req, res) => {
             return;
         }
 
-        let tagData = []
+        let tagData = [];
         data.tags.forEach(tag => {
             if (req.body[`tag-${tag.id}`]) {
                 tagData.push({ type: 'tags', id: tag.id });
             }
-        })
+        });
         if (tagData.length <= 0 || tagData.length >= 3) {
             data.title = req.body.title;
             data.content = req.body.content;
@@ -123,9 +123,9 @@ let postHandler = (req, res) => {
             else {
                 res.redirect(`/d/${body.data.id}-${body.data.attributes.title}`);
             }
-        })
+        });
     });
-}
+};
 
 module.exports = {
     get: getHandler,

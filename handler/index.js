@@ -25,7 +25,7 @@ let handler = (req, res) => {
         sql: 'SELECT name, color, id, slug FROM fl_tags'
     }, (err, table) => {
         if (err) {
-            res.render('error', {code: '500', msg: 'MySQL Error.'})
+            res.render('error', {code: '500', msg: 'MySQL Error.'});
             return;
         }
         data.tags = table.map(item => {
@@ -42,7 +42,7 @@ let handler = (req, res) => {
             sql: 'SELECT * FROM fl_discussions_tags;'
         }, (err, table) => {
             if (err) {
-                res.render('error', {code: '500', msg: 'MySQL Error.'})
+                res.render('error', {code: '500', msg: 'MySQL Error.'});
                 return;
             }
             let tagMap = {};
@@ -51,9 +51,9 @@ let handler = (req, res) => {
                 data.tags.forEach(tag => {
                     if (tag.id == id)
                         result = tag.name;
-                })
+                });
                 return result;
-            }
+            };
 
             table.forEach(row => {
                 if (!tagMap[row.discussion_id]) {
@@ -83,7 +83,7 @@ let handler = (req, res) => {
                 ].join(' '),
             }, (err, table) => {
                 if (err) {
-                    res.render('error', {code: '500', msg: 'MySQL Error.'})
+                    res.render('error', {code: '500', msg: 'MySQL Error.'});
                     return;
                 }
                 data.topics = table.map(item => {
@@ -117,14 +117,14 @@ let handler = (req, res) => {
                 data.topics = sticky.concat(data.topics);
 
                 let currentPage = data.currentPage = req.query.page || 1; currentPage--;
-                let maxPages = data.maxPages = Math.floor(data.topics.length / config.postsPerPage) + (data.topics.length % config.postsPerPage === 0 ? 0 : 1);
+                data.maxPages = Math.floor(data.topics.length / config.postsPerPage) + (data.topics.length % config.postsPerPage === 0 ? 0 : 1);
                 data.topics = data.topics.slice(currentPage * config.postsPerPage, Math.min((currentPage + 1) * config.postsPerPage, data.topics.length));
 
                 // Render the page and send to client.
                 res.render('index', data);
             });
         });
-    })
+    });
 };
 
 module.exports = handler;

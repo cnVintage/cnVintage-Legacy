@@ -7,13 +7,13 @@ let test = {
         let config = require('../config');
         request.get({
             url: 'http://localhost:' + config.port
-        }, (err, res, body) => {
+        }, (err) => {
             if (err) {
                 error(err);
             }
             next();
-        })
+        });
     },
-}
+};
 
 module.exports = test;

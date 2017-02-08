@@ -1,4 +1,5 @@
 // Test script for cnVintage-legacy
+/*eslint no-console: ["error", { allow: ["warn", "error", "log"] }] */
 
 class TestQueue {
     constructor(onfinish) {
@@ -10,7 +11,7 @@ class TestQueue {
             task.forEach(item => this.push(item));
         }
         else if (typeof task.name === 'undefined' || typeof task.entry === 'undefined') {
-            console.log('Illegal task.')
+            console.log('Illegal task.');
             process.exit(1);
         }
         else {
@@ -29,7 +30,7 @@ class TestQueue {
             }, () => {
                 console.log(`Passed: ${this.queue[offset].name}`);
                 this.start(offset + 1);
-            })
+            });
         }
     }
 }
@@ -43,7 +44,7 @@ let main = () => {
         console.log('Stoping server...');
         server.kill();
         console.log('** WARNING: Image Proxy module is untested. **');
-    })
+    });
     let testQueue = new TestQueue();
     testQueue.push(require('./db-conn'));
     testQueue.push(require('./site-index'));

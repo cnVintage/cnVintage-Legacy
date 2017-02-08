@@ -7,7 +7,7 @@ let test = [{
         let config = require('../config');
         request.get({
             url: 'http://localhost:' + config.port + '/?q=IBM'
-        }, (err, res, body) => {
+        }, (err, res) => {
             if (err) {
                 error('Request error: ' + err);
             }
@@ -17,7 +17,7 @@ let test = [{
             else {
                 error('Response error: Status code should be 200, but got a ' + res.statusCode);
             }
-        })
+        });
     },
 }, {
     name: 'Search with invalid empty keyword test.',
@@ -26,7 +26,7 @@ let test = [{
         let config = require('../config');
         request.get({
             url: 'http://localhost:' + config.port + '/?q='
-        }, (err, res, body) => {
+        }, (err, res) => {
             if (err) {
                 error('Request error: ' + err);
             }
@@ -36,9 +36,9 @@ let test = [{
             else {
                 error('Response error: Status code should be 200, but got a ' + res.statusCode);
             }
-        })
+        });
     },
 },
-]
+];
 
 module.exports = test;

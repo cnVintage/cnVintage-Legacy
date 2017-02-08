@@ -1,6 +1,5 @@
 'use strict';
 
-let db = require('../db');
 let config = require('../config');
 let request = require('request').defaults({jar: true});
 
@@ -14,13 +13,13 @@ let handler = (req, res) => {
             relationships: {
                 discussion: {
                     data: {
-                        type: "discussions",
+                        type: 'discussions',
                         id: req.body.discussion_id
                     }
                 }
             }
         }
-    }
+    };
     let cookieJar = request.jar();
     cookieJar.setCookie(`flarum_remember=${req.cookies.access_token}`, config.origUrl);
 
@@ -32,9 +31,9 @@ let handler = (req, res) => {
         json: true,
         body: data,
         jar: cookieJar
-    }, (err, response, body) => {
+    }, () => {
         res.redirect(req.query.redirect || '/');
-    })
+    });
 };
 
 module.exports = handler;

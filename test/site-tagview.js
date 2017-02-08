@@ -7,12 +7,12 @@ let test = [{
         let config = require('../config');
         request.get({
             url: 'http://localhost:' + config.port + '/t/show'
-        }, (err, res, body) => {
+        }, (err) => {
             if (err) {
                 error(err);
             }
             next();
-        })
+        });
     },
 }, {
     name: 'Tag view with invalid tag test.',
@@ -21,7 +21,7 @@ let test = [{
         let config = require('../config');
         request.get({
             url: 'http://localhost:' + config.port + '/t/233'
-        }, (err, res, body) => {
+        }, (err, res) => {
             if (err) {
                 error('Request error: ' + err);
             }
@@ -31,9 +31,9 @@ let test = [{
             else {
                 error('Response error: Status code should be 404, but got a ' + res.statusCode);
             }
-        })
+        });
     },
 },
-]
+];
 
 module.exports = test;

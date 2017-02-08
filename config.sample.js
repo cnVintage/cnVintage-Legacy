@@ -31,6 +31,6 @@ let config = {
         publish: '发布',
         emptyset: '没听过这个说法',
     }
-}
+};
 
 module.exports = config;

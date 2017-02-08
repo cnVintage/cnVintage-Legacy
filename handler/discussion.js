@@ -31,12 +31,12 @@ let handler = (req, res) => {
     }, (err, table) => {
         if (err) {
             res.status(500);
-            res.render('error', {code: '500', msg: 'MySQL Error.'})
+            res.render('error', {code: '500', msg: 'MySQL Error.'});
             return;
         }
         if (table.length == 0) {
             res.status(404);
-            res.render('error', {code: '404', msg: 'No Such Discussion.'})
+            res.render('error', {code: '404', msg: 'No Such Discussion.'});
             return;
         }
         // Reconstruct the structure of post list.
@@ -47,15 +47,15 @@ let handler = (req, res) => {
                     + row.time.toLocaleTimeString('zh-CN', {timeZone: 'Asia/Shanghai', hour12: false}),
                 content: row.content
                     .replace(/<[s|e]>([^]+?)<\/[s|e]>/g, () => '')
-                    .replace(/<IMG ([^]+?)>([^]+?)<\/IMG>/g, (match, p1, p2) => `<img src="/imgProxy?url=${ encodeURIComponent(p1.match(/src="([^]+?)"/)[1]) }">`)
+                    .replace(/<IMG ([^]+?)>([^]+?)<\/IMG>/g, (match, p1) => `<img src="/imgProxy?url=${ encodeURIComponent(p1.match(/src="([^]+?)"/)[1]) }">`)
                     .replace(/<URL url="([^]+?)">([^]+?)<\/URL>/g, (match, p1, p2) => `<a href="${p1}">${p2}</a>`)
                     .replace(/<CODE>([^]+?)<\/CODE>/, (match, p1) => `<pre><code>${p1}</code></pre>`)
                     .replace(/<C>\$\$([^]+?)\$\$<\/C>/g, (match, expr) => `<img src="/KaTeX/${encodeURIComponent(expr)}"></img>`)
-                    .replace(/<HR>([^]+?)<\/HR>/g, (match, p1) => `<hr />`)
+                    .replace(/<HR>([^]+?)<\/HR>/g, () => '<hr />')
                     .replace(/@(.+?)#\d+/, (match, p1) => `<font size="3" color="#337000">${config.lang.replyTo}${p1}:</font> `)
                     .replace(/<USERMENTION ([^]+?)>([^]+?)<\/USERMENTION>/, (match, p1, p2) => `<a href="/u/${ p1.match(/username="(.+?)"/)[1] }" class="mention">${ p2 }</a>`),
                 avatarPath: '/assets/avatars/' + (row.avatar_path || 'default.jpg')
-            }
+            };
         });
 
         // Update discussion title.
@@ -63,7 +63,7 @@ let handler = (req, res) => {
 
         // Render the page and send to client.
         res.render('discussion', data);
-    })
+    });
 };
 
 module.exports = handler;

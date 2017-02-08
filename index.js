@@ -19,13 +19,13 @@ app.use('/static', express.static('./static'));
 app.use('/assets', express.static(config.assetsPath));
 
 // Log all activity to file.
-app.use(utils.logTool)
+app.use(utils.logTool);
 
 // Make sure our content would be decoded correctly.
 app.use((req, res, next) => {
     res.set('Content-Type', 'text/html; charset=UTF-8');
     next();
-})
+});
 
 // Image proxy
 app.get('/imgProxy', require('./handler/image-proxy'));
@@ -66,4 +66,4 @@ app.use(function(req, res) {
 });
 
 app.listen(config.port);
-console.log(`[INFO] Server started on port ${config.port}.`);
+utils.log(`[INFO] Server started on port ${config.port}.`);

@@ -1,8 +1,6 @@
 'use strict';
 
 let db = require('../db');
-let config = require('../config');
-let request = require('request').defaults({jar: true});
 
 let handler = (req, res) => {
     if (req.logined) {
@@ -14,10 +12,10 @@ let handler = (req, res) => {
                 'WHERE id=?'
             ].join(' '),
             values: [token],
-        }, (err, table) => {
+        }, () => {
             res.clearCookie('access_token');
             res.redirect('/');
-        })
+        });
     }
     else {
         res.redirect('/');

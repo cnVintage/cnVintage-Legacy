@@ -18,7 +18,7 @@ let handler = (req, res) => {
         sql: 'SELECT name, color, id, slug FROM fl_tags'
     }, (err, table) => {
         if (err) {
-            res.render('error', {code: '500', msg: 'MySQL Error.'})
+            res.render('error', {code: '500', msg: 'MySQL Error.'});
             return;
         }
 
@@ -42,12 +42,12 @@ let handler = (req, res) => {
         }, (err, table) => {
             if (err) {
                 res.status(500);
-                res.render('error', {code: '500', msg: 'MySQL Error.'})
+                res.render('error', {code: '500', msg: 'MySQL Error.'});
                 return;
             }
             if (!table[0]) {
                 res.status(404);
-                res.render('error', {code: '404', msg: 'No Such Tag.'})
+                res.render('error', {code: '404', msg: 'No Such Tag.'});
                 return;
             }
             let tagId = table[0].id;
@@ -57,7 +57,7 @@ let handler = (req, res) => {
                 sql: 'SELECT * FROM fl_discussions_tags;'
             }, (err, table) => {
                 if (err) {
-                    res.render('error', {code: '500', msg: 'MySQL Error.'})
+                    res.render('error', {code: '500', msg: 'MySQL Error.'});
                     return;
                 }
                 let tagMap = {};
@@ -66,9 +66,9 @@ let handler = (req, res) => {
                     data.tags.forEach(tag => {
                         if (tag.id == id)
                             result = tag.name;
-                    })
+                    });
                     return result;
-                }
+                };
 
                 table.forEach(row => {
                     if (!tagMap[row.discussion_id]) {
@@ -103,7 +103,7 @@ let handler = (req, res) => {
                     values: [tagId],
                 }, (err, table) => {
                     if (err) {
-                        res.render('error', {code: '500', msg: 'MySQL Error.'})
+                        res.render('error', {code: '500', msg: 'MySQL Error.'});
                         return;
                     }
                     data.topics = table.map(item => {
@@ -137,7 +137,7 @@ let handler = (req, res) => {
                     data.topics = sticky.concat(data.topics);
 
                     let currentPage = data.currentPage = req.query.page || 1; currentPage--;
-                    let maxPages = data.maxPages = Math.floor(data.topics.length / config.postsPerPage) + 1;
+                    data.maxPages = Math.floor(data.topics.length / config.postsPerPage) + 1;
                     data.topics = data.topics.slice(currentPage * config.postsPerPage, Math.min((currentPage + 1) * config.postsPerPage, data.topics.length));
 
                     // Render the page and send to client.
@@ -145,7 +145,7 @@ let handler = (req, res) => {
                 });
             });
         });
-    })
+    });
 };
 
 module.exports = handler;

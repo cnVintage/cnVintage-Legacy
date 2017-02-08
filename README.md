@@ -1,6 +1,9 @@
 cnVintage-Legacy
 ================
 
+[![License](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)](LICENSE)
+[![Build Status](https://travis-ci.org/ntzyz/nano-player.svg?branch=master)](https://travis-ci.org/cnVintage/cnVintage-Legacy)
+
 Legacy version of cnVintage with support for IE ~~3.0~~ 4.0.
 
 ## Status

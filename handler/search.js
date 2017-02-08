@@ -22,7 +22,7 @@ let handler = (req, res) => {
         sql: 'SELECT name, color, id, slug FROM fl_tags'
     }, (err, table) => {
         if (err) {
-            res.render('error', {code: '500', msg: 'MySQL Error.'})
+            res.render('error', {code: '500', msg: 'MySQL Error.'});
             return;
         }
         data.tags = table.map(item => {
@@ -39,16 +39,16 @@ let handler = (req, res) => {
             sql: 'SELECT id, discussion_id, content FROM fl_posts WHERE fl_posts.hide_user_id IS NULL',
         }, (err, table) => {
             if (err) {
-                res.render('error', {code: '500', msg: 'MySQL Error.'})
+                res.render('error', {code: '500', msg: 'MySQL Error.'});
                 return;
             }
             let filter = item => {
                 return (item.content.toLowerCase().indexOf(partten) >= 0);
-            }
+            };
 
             // Remove all the HTML markup.
             table = table.map(item => {
-                item.content = item.content.replace(/<.+?>/g, (match) => {
+                item.content = item.content.replace(/<.+?>/g, () => {
                     return '';
                 });
                 return item;
@@ -63,7 +63,7 @@ let handler = (req, res) => {
                     preview: item.content.substr(begin, 96).replace(new RegExp(partten, 'ig'), (match) => {
                         return `<span class="mark">${match}</span>`;
                     }),
-                }
+                };
             });
 
             // A map of search result. `discussion id` -> `preview`
@@ -75,13 +75,13 @@ let handler = (req, res) => {
                 else {
                     searchResultById[item.discussion_id] = '...<br />' + item.preview + '<br />...';
                 }
-            })
+            });
 
             conn.query({
                 sql: 'SELECT * FROM fl_discussions_tags;'
             }, (err, table) => {
                 if (err) {
-                    res.render('error', {code: '500', msg: 'MySQL Error.'})
+                    res.render('error', {code: '500', msg: 'MySQL Error.'});
                     return;
                 }
                 let tagMap = {};
@@ -90,9 +90,9 @@ let handler = (req, res) => {
                     data.tags.forEach(tag => {
                         if (tag.id == id)
                             result = tag.name;
-                    })
+                    });
                     return result;
-                }
+                };
 
                 table.forEach(row => {
                     if (!tagMap[row.discussion_id]) {
@@ -123,12 +123,12 @@ let handler = (req, res) => {
                     ].join(' '),
                 }, (err, table) => {
                     if (err) {
-                        res.render('error', {code: '500', msg: 'MySQL Error.'})
+                        res.render('error', {code: '500', msg: 'MySQL Error.'});
                         return;
                     }
                     let filter = item => {
                         return item['title'].toLowerCase().indexOf(partten) >= 0 || searchResultById[item.id];
-                    }
+                    };
 
                     let filtered = table.filter(filter);
 
@@ -159,7 +159,7 @@ let handler = (req, res) => {
                 });
             });
         });
-    })
+    });
 };
 
 module.exports = handler;

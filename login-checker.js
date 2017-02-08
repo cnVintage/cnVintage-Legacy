@@ -1,7 +1,7 @@
 'use strict';
 
 let db = require('./db');
-let config = require('./config');
+let utils = require('./utils');
 
 let middleware = (req, res, next) => {
     // Check if cookie named access_token exist
@@ -26,8 +26,8 @@ let middleware = (req, res, next) => {
             values: [req.cookies.access_token]
         }, (err, table) => {
             if (err) {
-                res.render('error', {code: '500', msg: 'MySQL Error.'})
-                console.error(err);
+                res.render('error', {code: '500', msg: 'MySQL Error.'});
+                utils.log(err);
                 return;
             }
             if (table.length !== 1) {
@@ -43,7 +43,7 @@ let middleware = (req, res, next) => {
                     lastActivity: table[0].last_activity,
                     lifetime: table[0].lifetime,
                     avatar: '/assets/avatars/' + (table[0].avatar_path || 'default.jpg'),
-                }
+                };
                 // Check if expired.
                 if (Math.ceil(Date.now() / 1000) > tokenInfo.lifetime + tokenInfo.lastActivity) {
                     // Expired.
@@ -57,7 +57,7 @@ let middleware = (req, res, next) => {
                     req.loginInfo = {
                         username: tokenInfo.userName,
                         avatar: tokenInfo.avatar
-                    }
+                    };
                     next();
                 }
             }
