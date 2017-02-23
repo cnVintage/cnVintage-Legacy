@@ -2,6 +2,7 @@ Installation
 ============
 
 ### 1. Prepare dependency
+#### For Ubuntu
 Install `xvfb`, `graphicsmagick` and `imagemagick` from Ubuntu repositery.
 ```
 sudo apt install xvfb graphicsmagick imagemagick -y
@@ -13,11 +14,17 @@ wget http://download.gna.org/wkhtmltopdf/0.12/0.12.4/wkhtmltox-0.12.4_linux-gene
 wget https://nodejs.org/dist/v7.4.0/node-v7.4.0-linux-x64.tar.xz
 # Manually setup this two xz package.
 ```
+#### For Arch Linux
+Simply just:
+```
+sudo pacman -S xorg-server-xvfb nodejs npm wkhtmltopdf graphicsmagick imagemagick
+```
 
-### 2. Clone this repositery
+### 2. Clone this repositery and install node dependency
 ``` bash
 git clone https://github.com/cnVintage/cnVintage-Legacy.git
 cd cnVintage-Legacy
+npm i
 ```
 
 ### 3. Edit config file

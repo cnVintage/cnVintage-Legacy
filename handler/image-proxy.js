@@ -9,7 +9,7 @@ let config = require('../config');
 let gm = require('gm');
 let request = require('request');
 let fs = require('fs');
-let utils = require('./utils');
+let utils = require('../utils');
 
 let handler = (req, res) => {
     // Fetch the url of image that we need to convert.
