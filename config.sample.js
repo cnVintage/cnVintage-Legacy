@@ -16,7 +16,7 @@ let config = {
         lastReply: ' 最后回复于 ',
         legacy: '简易版',          // 雾
         search: '搜索',
-        signin: '登陆',
+        signin: '登录',
         signup: '注册',
         index: '首页',
         searchResult: '搜索结果',
