@@ -26,5 +26,12 @@ disconnectHandler();
 module.exports = {
     getConn: function() {
         return conn;
+    },
+    recreateConn: function () {
+        try {
+            conn.destroy();
+        } catch(e) { /* nothing to do here */ }
+        conn = mysql.createConnection(require('./config').mysql);
+        disconnectHandler();
     }
 };

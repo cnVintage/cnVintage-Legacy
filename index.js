@@ -4,6 +4,7 @@ let express = require('express');
 let config = require('./config');
 let cookieParser = require('cookie-parser');
 let bodyParser = require('body-parser');
+let db = require('./db');
 let utils = require('./utils');
 
 let app = express();
@@ -32,6 +33,18 @@ app.get('/imgProxy', require('./handler/image-proxy'));
 
 // LaTeX to JPEG
 app.get('/KaTeX/:expr', require('./handler/katex'));
+
+// Check if MySQL connection is alive
+app.use((req, res, next) => {
+    db.getConn().query('SELECT version()', (err) => {
+        if (err) {
+            // YOU DIED
+            // recreate a new one
+            db.recreateConn();
+        }
+        next();
+    });
+});
 
 // Verify cookie in order to get the logined user's info.
 app.use(require('./login-checker'));

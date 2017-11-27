@@ -6,6 +6,12 @@ let config = require('../config');
 let handler = (req, res) => {
     let partten = req.query.q.toLowerCase();
 
+    try {
+        new RegExp(partten, 'ig');
+    } catch (e) {
+        return res.render('error', { code: 400, msg: 'Invalid search request.' });
+    }
+
     // Storage the data that will be passed to the render engine.
     let data = {
         lang: config.lang,
