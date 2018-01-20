@@ -3,16 +3,15 @@ Installation
 
 ### 1. Prepare dependency
 #### For Ubuntu
-Install `xvfb`, `graphicsmagick` and `imagemagick` from Ubuntu repositery.
+Install `xvfb`, `graphicsmagick`， `imagemagick` and `wkhtmltox` from Ubuntu repositery.
 ```
-sudo apt install xvfb graphicsmagick imagemagick -y
+sudo apt install xvfb graphicsmagick imagemagick wkhtmltox -y
 ```
-And then install `node`, `wkhtmltopdf` from binary release. Make sure `node`, `npm` and `wkhtmltoimage` can be found in `$PATH`.
+And then install `node` from binary release. Make sure `node`, `npm` and `wkhtmltoimage` can be found in `$PATH`.
 ```
 cd /tmp
-wget http://download.gna.org/wkhtmltopdf/0.12/0.12.4/wkhtmltox-0.12.4_linux-generic-amd64.tar.xz
 wget https://nodejs.org/dist/v7.4.0/node-v7.4.0-linux-x64.tar.xz
-# Manually setup this two xz package.
+# Manually setup this xz package.
 ```
 #### For Arch Linux
 Simply just:
@@ -36,12 +35,15 @@ vi config.js
 ### 4. Create a systemd unit
 ``` bash
 echo "
-[Uint]
+[Unit]
 Description=Legacy version of cnVintage.org.
 
 [Service]
 WorkingDirectory=$(pwd)
 ExecStart=$(which node) $(pwd)/index.js
+
+[Install]
+WantedBy=multi-user.target
 " | sudo tee /lib/systemd/system/cnvtg-legacy.service
 ```
 
