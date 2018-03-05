@@ -62,9 +62,9 @@ html
             td(width="20")
         include ./footer.pug
         script(language="JavaScript").
-            if (document.querySelector) {
-                els = Array.from(document.querySelectorAll("a.img"));
-                els.forEach(function (el) {
-                    el.innerHTML = '<img src="' + el.getAttribute('href') + '"></img>'
-                })
+            if (document.querySelectorAll) {
+                els = document.querySelectorAll("a.img");
+                for (var i = 0; i < els.length; ++i) {
+                    els[i].innerHTML = '<img src="' + els[i].getAttribute('href') + '"></img>'
+                }
             }
