@@ -12,6 +12,9 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
+// disable 'x-powered-by' for security
+app.disable('x-powered-by');
+
 // use pug to render html code.
 app.set('view engine', 'pug');
 

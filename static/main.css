@@ -88,3 +88,13 @@ a:hover {
     background: #ecf6e4;
     color: #7d9966 !important;
 }
+
+body {
+    max-width: 1024px;
+    margin: 0 auto;
+    background-color: #FFFFFF;
+}
+
+html {
+    background-color: #F0F0F0;
+}

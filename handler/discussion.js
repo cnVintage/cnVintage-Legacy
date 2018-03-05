@@ -47,7 +47,7 @@ let handler = (req, res) => {
                     + row.time.toLocaleTimeString('zh-CN', {timeZone: 'Asia/Shanghai', hour12: false}),
                 content: row.content
                     .replace(/<[s|e]>([^]+?)<\/[s|e]>/g, () => '')
-                    .replace(/<IMG ([^]+?)>([^]+?)<\/IMG>/g, (match, p1) => `<img src="/imgProxy?url=${ encodeURIComponent(p1.match(/src="([^]+?)"/)[1]) }">`)
+                    .replace(/<IMG ([^]+?)>([^]+?)<\/IMG>/g, (match, p1) => `<a href="/imgProxy?url=${ encodeURIComponent(p1.match(/src="([^]+?)"/)[1]) }" target="_blank" class="img"><font color="#337000"><b><i>点击此处打开图片</i></b></font></a>`)
                     .replace(/<URL url="([^]+?)">([^]+?)<\/URL>/g, (match, p1, p2) => `<a href="${p1}">${p2}</a>`)
                     .replace(/<CODE>([^]+?)<\/CODE>/, (match, p1) => `<pre><code>${p1}</code></pre>`)
                     .replace(/<C>\$\$([^]+?)\$\$<\/C>/g, (match, expr) => `<img src="/KaTeX/${encodeURIComponent(expr)}"></img>`)
