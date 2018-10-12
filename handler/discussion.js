@@ -2,6 +2,7 @@
 
 let db = require('../db');
 let config = require('../config');
+let utils = require('../utils');
 
 let handler = (req, res) => {
     let conn = db.getConn();
@@ -43,8 +44,7 @@ let handler = (req, res) => {
         data.posts = table.map(row => {
             return {
                 userName: row.username,
-                date: row.time.toLocaleDateString('zh-CN', {timeZone: 'Asia/Shanghai', hour12: false}) + ' ' 
-                    + row.time.toLocaleTimeString('zh-CN', {timeZone: 'Asia/Shanghai', hour12: false}),
+                date: utils.formatDate(row.time) + ' ' + utils.formatTime(row.time),
                 content: row.content
                     .replace(/<[s|e]>([^]+?)<\/[s|e]>/g, () => '')
                     .replace(/<IMG ([^]+?)>([^]+?)<\/IMG>/g, (match, p1) => `<a href="/imgProxy?url=${ encodeURIComponent(p1.match(/src="([^]+?)"/)[1]) }" target="_blank" class="img"><font color="#337000"><b><i>点击此处打开图片</i></b></font></a>`)

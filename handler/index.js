@@ -2,6 +2,7 @@
 
 let db = require('../db');
 let config = require('../config');
+let utils = require('../utils');
 
 let handler = (req, res) => {
     // Check if the user is searching.
@@ -97,7 +98,7 @@ let handler = (req, res) => {
                         lastUser: {
                             name: item['last_user_name'],
                         },
-                        lastDate: item['last_time'].toLocaleDateString('zh-CN', {timeZone: 'Asia/Shanghai', hour12: false}),
+                        lastDate: utils.formatDate(item['last_time']),
                         replyCnt: item['comments_count'] - 1,
                         href: `/d/${item['id']}-${item['slug']}`,
                         isSticky: item['is_sticky'],
@@ -122,6 +123,7 @@ let handler = (req, res) => {
 
                 // Render the page and send to client.
                 res.render('index', data);
+                // res.send('ok');
             });
         });
     });
