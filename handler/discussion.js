@@ -18,7 +18,7 @@ let handler = (req, res) => {
     // Get all the posts under the discussion by discussion id.
     conn.query({
         sql: [
-            'SELECT fl_posts.type, fl_posts.content, fl_posts.time, fl_posts.user_id,',
+            'SELECT fl_posts.type, fl_posts.content, fl_posts.time, fl_posts.user_id, fl_posts.type, ',
             '       fl_discussions.title,',
             '       fl_users.avatar_path, fl_users.username',
             'FROM fl_posts',
@@ -42,7 +42,7 @@ let handler = (req, res) => {
         }
         // Reconstruct the structure of post list.
         data.posts = table.map(row => {
-            return {
+            let post = {
                 userName: row.username,
                 date: utils.formatDate(row.time) + ' ' + utils.formatTime(row.time),
                 content: row.content
@@ -56,6 +56,13 @@ let handler = (req, res) => {
                     .replace(/<USERMENTION ([^]+?)>([^]+?)<\/USERMENTION>/, (match, p1, p2) => `<a href="/u/${ p1.match(/username="(.+?)"/)[1] }" class="mention">${ p2 }</a>`),
                 avatarPath: '/assets/avatars/' + (row.avatar_path || 'default.jpg')
             };
+
+            if (row.type === 'discussionRenamed') {
+                let nameArray = JSON.parse(row.content);
+                post.content = '修改标题成 <strong>' + nameArray[1] + '</strong>';
+            }
+
+            return post;
         });
 
         // Update discussion title.
