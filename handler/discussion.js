@@ -18,15 +18,15 @@ let handler = (req, res) => {
     // Get all the posts under the discussion by discussion id.
     conn.query({
         sql: [
-            'SELECT fl_posts.type, fl_posts.content, fl_posts.time, fl_posts.user_id, fl_posts.type, ',
+            'SELECT fl_posts.type, fl_posts.content, fl_posts.created_at, fl_posts.user_id, fl_posts.type, ',
             '       fl_discussions.title,',
-            '       fl_users.avatar_path, fl_users.username',
+            '       fl_users.avatar_url, fl_users.username',
             'FROM fl_posts',
             'INNER JOIN fl_users',
             'ON fl_users.id = fl_posts.user_id',
             'INNER JOIN fl_discussions',
             'ON fl_discussions.id = discussion_id',
-            'WHERE fl_discussions.id = ? AND fl_posts.hide_user_id IS NULL;',
+            'WHERE fl_discussions.id = ? AND fl_posts.hidden_user_id IS NULL;',
         ].join(' '),
         values: [req.params.id]
     }, (err, table) => {
@@ -44,7 +44,7 @@ let handler = (req, res) => {
         data.posts = table.map(row => {
             let post = {
                 userName: row.username,
-                date: utils.formatDate(row.time) + ' ' + utils.formatTime(row.time),
+                date: utils.formatDate(row.created_at) + ' ' + utils.formatTime(row.created_at),
                 content: row.content
                     .replace(/<[s|e]>([^]+?)<\/[s|e]>/g, () => '')
                     .replace(/<IMG ([^]+?)>([^]+?)<\/IMG>/g, (match, p1) => `<a href="/imgProxy?url=${ encodeURIComponent(p1.match(/src="([^]+?)"/)[1]) }" target="_blank" class="img"><font color="#337000"><b><i>点击此处打开图片</i></b></font></a>`)
@@ -54,7 +54,7 @@ let handler = (req, res) => {
                     .replace(/<HR>([^]+?)<\/HR>/g, () => '<hr />')
                     .replace(/@(.+?)#\d+/, (match, p1) => `<font size="3" color="#337000">${config.lang.replyTo}${p1}:</font> `)
                     .replace(/<USERMENTION ([^]+?)>([^]+?)<\/USERMENTION>/, (match, p1, p2) => `<a href="/u/${ p1.match(/username="(.+?)"/)[1] }" class="mention">${ p2 }</a>`),
-                avatarPath: '/assets/avatars/' + (row.avatar_path || 'default.jpg')
+                avatarPath: '/assets/avatars/' + (row.avatar_url || 'default.jpg')
             };
 
             if (row.type === 'discussionRenamed') {

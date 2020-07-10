@@ -68,19 +68,19 @@ let handler = (req, res) => {
             conn.query({
                 sql: [
                     'SELECT fl_discussions.id, fl_discussions.title, fl_discussions.slug,',
-                    '       fl_discussions.comments_count, fl_discussions.last_time,',
-                    '       fl_discussions.start_user_id, fl_discussions.last_user_id,',
+                    '       fl_discussions.comment_count, fl_discussions.last_posted_at,',
+                    '       fl_discussions.user_id, fl_discussions.last_posted_user_id,',
                     '       fl_discussions.is_sticky,',
-                    '       user1.avatar_path, user1.username as start_user_name,',
+                    '       user1.avatar_url, user1.username as start_user_name,',
                     '       user2.username as last_user_name',
                     'FROM  fl_discussions',
                     'INNER JOIN fl_users user1',
-                    '   ON user1.id = start_user_id',
+                    '   ON user1.id = user_id',
                     'INNER JOIN fl_users user2',
-                    '   ON user2.id = last_user_id',
-                    'WHERE fl_discussions.comments_count != 0',
-                    'AND   fl_discussions.hide_time IS NULL',
-                    'ORDER BY fl_discussions.last_time DESC',
+                    '   ON user2.id = last_posted_user_id',
+                    'WHERE fl_discussions.comment_count != 0',
+                    'AND   fl_discussions.hidden_at IS NULL',
+                    'ORDER BY fl_discussions.last_posted_at DESC',
                 ].join(' '),
             }, (err, table) => {
                 if (err) {
@@ -92,14 +92,14 @@ let handler = (req, res) => {
                         title: item['title'],
                         id: item['id'],
                         startUser: {
-                            avatarPath: '/assets/avatars/' + (item['avatar_path'] || 'default.jpg'),
+                            avatarPath: '/assets/avatars/' + (item['avatar_url'] || 'default.jpg'),
                             name: item['start_user_name'],
                         },
                         lastUser: {
                             name: item['last_user_name'],
                         },
-                        lastDate: utils.formatDate(item['last_time']),
-                        replyCnt: item['comments_count'] - 1,
+                        lastDate: utils.formatDate(item['last_posted_at']),
+                        replyCnt: item['comment_count'] - 1,
                         href: `/d/${item['id']}-${item['slug']}`,
                         isSticky: item['is_sticky'],
                         tagList: `[${tagMap[item['id']].join('|')}]`

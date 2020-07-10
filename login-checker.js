@@ -17,7 +17,7 @@ let middleware = (req, res, next) => {
         conn.query({
             sql: [
                 'SELECT fl_access_tokens.id, fl_access_tokens.user_id, fl_access_tokens.last_activity,',
-                '       fl_access_tokens.lifetime, fl_users.username, fl_users.avatar_path',
+                '       fl_access_tokens.lifetime, fl_users.username, fl_users.avatar_url',
                 'FROM   fl_access_tokens ',
                 'INNER JOIN fl_users ',
                 '        ON fl_users.id = user_id ',
@@ -42,7 +42,7 @@ let middleware = (req, res, next) => {
                     userName: table[0].username,
                     lastActivity: table[0].last_activity,
                     lifetime: table[0].lifetime,
-                    avatar: '/assets/avatars/' + (table[0].avatar_path || 'default.jpg'),
+                    avatar: '/assets/avatars/' + (table[0].avatar_url || 'default.jpg'),
                 };
                 // Check if expired.
                 if (Math.ceil(Date.now() / 1000) > tokenInfo.lifetime + tokenInfo.lastActivity) {
