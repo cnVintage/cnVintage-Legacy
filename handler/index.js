@@ -40,7 +40,7 @@ let handler = (req, res) => {
 
         // Fetch the discussions <-> tags table.
         conn.query({
-            sql: 'SELECT * FROM fl_discussions_tags;'
+            sql: 'SELECT * FROM fl_discussion_tag;'
         }, (err, table) => {
             if (err) {
                 res.render('error', {code: '500', msg: 'MySQL Error.'});

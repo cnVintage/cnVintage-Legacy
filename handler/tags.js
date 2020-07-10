@@ -55,7 +55,7 @@ let handler = (req, res) => {
             data.title = `${config.lang.tag}: ${table[0].name} - ${config.lang.siteTitle}`;
             // Fetch the discussions <-> tags table.
             conn.query({
-                sql: 'SELECT * FROM fl_discussions_tags;'
+                sql: 'SELECT * FROM fl_discussion_tag;'
             }, (err, table) => {
                 if (err) {
                     res.render('error', {code: '500', msg: 'MySQL Error.'});
@@ -94,9 +94,9 @@ let handler = (req, res) => {
                         '   ON user1.id = user_id',
                         'INNER JOIN fl_users user2',
                         '   ON user2.id = last_posted_user_id',
-                        'INNER JOIN fl_discussions_tags',
-                        '   ON fl_discussions_tags.tag_id = ?',
-                        'WHERE fl_discussions.id = fl_discussions_tags.discussion_id',
+                        'INNER JOIN fl_discussion_tag',
+                        '   ON fl_discussion_tag.tag_id = ?',
+                        'WHERE fl_discussions.id = fl_discussion_tag.discussion_id',
                         'AND   fl_discussions.comment_count != 0',
                         'AND   fl_discussions.hidden_at IS NULL',
                         'ORDER BY fl_discussions.last_posted_at DESC'
